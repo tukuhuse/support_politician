@@ -25,9 +25,12 @@
                         <td><a href="#">議題検索ページ</a></td>
                         <td><a href="#">議員検索ページ</a></td>
                         @guest
-                            <td><a href="./register">新規登録</a></td>
+                            <td><a href="{{ route('register') }}">新規登録</a></td>
                         @else
-                            <td><a href="#">ログアウト</a></td>
+                            <form method="POST" action="/logout">
+                                @csrf
+                                <a href="{{ route('logout') }}">ログアウト</a>
+                            </form>
                         @endguest
                     </tr>
                 </table>

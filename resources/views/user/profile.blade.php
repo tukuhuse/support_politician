@@ -11,11 +11,11 @@
         <table>
             <tr class="profile_data" id="user_name">
                 <td id="user_name subject">ユーザーネーム</td>
-                <td id="user_name content"></td>
+                <td id="user_name content">{{ $profile->name }}</td>
             </tr>
             <tr class="profile_data" id="constituency">
                 <td id="constituency subject">選挙区</td>
-                <td id="constituency content"></td>
+                <td id="constituency content">{{ $profile->constituency_id }}</td>
             </tr>
             <tr class="profile_data" id="political_party">
                 <td id="political_party subject">支援している政党</td>

@@ -18,15 +18,21 @@ Route::get('/', function() {
 */
 
 Route::get('/', 'Admin\NotLoginController@top');
-Route::get('/data', 'Admin\NotLoginController@datashow');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/user/index', 'UserprofilesController@index');
+//Route::get('/user/show/{user}', 'UserprofilesController@show');
+Route::resource('users','UserprofilesController');
 
-Route::group(['prefix' => 'admin'], function() {
-    Route::get('user/show_detail', 'Admin\UserController@show_detail');
-});
+/*Route::group(['prefix' => 'admin'], function() {
+    Route::get('user/show_detail', 'Admin\UserController@show_detail')->middleware('auth');
+    Route::get('/logout',[
+        'uses' => 'Admin\UserController@getLogout',
+        'as' => 'user.logout'
+        ]);
+});*/
 
 /*
 Route::group(['prefix' => 'admin'], function() {
