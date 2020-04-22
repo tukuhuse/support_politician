@@ -9,6 +9,5 @@
     @foreach ($users as $user)
         <h4>{{$user->name}}</h4>
         <a href="/users/{{$user->id}}">詳細を表示</a>
-        <p>{{$user->constituency_id}}</p>
     @endforeach
 @endsection

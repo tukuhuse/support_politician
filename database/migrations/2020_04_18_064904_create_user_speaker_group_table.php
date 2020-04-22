@@ -13,7 +13,7 @@ class CreateUserSpeakerGroupTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_speaker_group', function (Blueprint $table) {
+        Schema::create('user_speaker_groups', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id');
             $table->integer('speaker_group_id');
@@ -28,6 +28,6 @@ class CreateUserSpeakerGroupTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_speaker_group');
+        Schema::dropIfExists('user_speaker_groups');
     }
 }

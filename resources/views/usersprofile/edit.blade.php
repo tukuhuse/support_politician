@@ -14,15 +14,18 @@
         </div>
         <div>
             <label for="constituency_id">選挙区</label>
-            <input type="text" name="constituency" value="{{$user->constituency_id}}">
+            {{ Form::select('constituency_id', $constituencies, $user->constituency_id, ['class' => 'form', 'id' => 'constituency_id']) }}
         </div>
         <div>
             <label for="legislator_id">応援している国会議員</label>
-            <input type="text" name="legislator" value="">
+            {{ Form::select('legislator_id', $legislators,
+            $userlegislator, ['class' => 'form', 'id' => 'legislator_id']) }}
         </div>
         <div>
             <label for="speaker_group_id">応援している政党</label>
-            <input type="text" name="speaker_group" value="">
+            {{ Form::select('speaker_group_id', $speaker_group, $userspeakergroup, ['class' => 'form', 'id' => 'speaker_group_id']) }}
         </div>
+        @method('PUT')
+        <input type="submit" >
     </form>
 @endsection

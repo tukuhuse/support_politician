@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserLegislattorTable extends Migration
+class CreateUserLegislatorTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateUserLegislattorTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_legislattor', function (Blueprint $table) {
+        Schema::create('user_legislators', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id');
             $table->integer('legislator_id');
@@ -28,6 +28,6 @@ class CreateUserLegislattorTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_legislattor');
+        Schema::dropIfExists('user_legislators');
     }
 }

@@ -1,40 +1,17 @@
-<!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        
-        <title>トップページ</title>
-        
-        <script src="{{ secure_asset('js/app.js') }}" defer></script>
-        
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapi.com/css?family=Raleway:300.400.600" rel="stylesheet" type="text/css">
-        
-        <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
-        
-    </head>
-    <body>
-        <div id="menu">
-            <main class="menu_table">
-                <table class="menu_list">
-                    <tr>
-                        <td><a href="#">議題検索ページ</a></td>
-                        <td><a href="#">議員検索ページ</a></td>
-                        @guest
-                            <td><a href="{{ route('register') }}">新規登録</a></td>
-                        @else
-                            <form method="POST" action="/logout">
-                                @csrf
-                                <a href="{{ route('logout') }}">ログアウト</a>
-                            </form>
-                        @endguest
-                    </tr>
-                </table>
-            </main>
-        </div>
-    </body>
-</html>
+{{-- layoutsフォルダのapp.blade.phpを継承 --}}
+@extends('layouts.app')
+
+{{-- @yield('title')にテンプレート毎の値を代入 --}}
+@section('title', 'トップページ')
+
+{{-- app.blade.phpの@yield('content')に以下のレイアウトを代入 --}}
+@section('content')
+    <div id="menu_list">
+        <a href="#">議題検索ページ</a>
+        <a href="#">議員検索ページ</a>
+        @guest
+            <a href="{{ route('register') }}">新規登録</a>
+            <a href="{{ route('login') }}">ログイン</a>
+        @endguest
+    </div>
+@endsection

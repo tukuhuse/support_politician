@@ -16,11 +16,11 @@
     </div>
     <div id="user_profile_detail">
         <div id="user_profile_subject">支援している政党</div>
-        <div id="user_profile_content"></div>
+        <div id="user_profile_content">{{ $speaker_group->speaker_group_id }}</div>
     </div>
     <div id="user_profile_detail">
         <div id="user_profile_subject">支援している国会議員</div>
-        <div id="user_profile_content"></div>
+        <div id="user_profile_content">{{ $legislator->legislator_id }}</div>
     </div>
     <a href="/users/{{$user->id}}/edit">編集する</a>
     <a href="/users">一覧に戻る</a>
