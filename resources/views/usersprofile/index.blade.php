@@ -9,5 +9,11 @@
     @foreach ($users as $user)
         <h4>{{$user->name}}</h4>
         <a href="/users/{{$user->id}}">詳細を表示</a>
+        <form action="/users/{$user->id}" method="post">
+            {{ csrf_field() }}
+            <input type="hidden" name="_method" value="delete">
+            <input type="submit" name="" value="退会する">
+        </form>
+        {{-- <a href="/users/{{$user->id}}">削除する</a> --}}
     @endforeach
 @endsection
