@@ -27,6 +27,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    
+    public function constituency_name()
+    {
+        return $this->belongsTo('App\Constituency','constituency_id');
+    }
 
     /**
      * The attributes that should be cast to native types.
