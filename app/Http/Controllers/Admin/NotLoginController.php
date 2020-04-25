@@ -12,12 +12,4 @@ class NotLoginController extends Controller
     public function top() {
         return view('top');
     }
-    
-    public function datashow() {
-        $url='http://seiji.kpi-net.com/api/?type=1&count=480&format=json';
-        $json=GoutteFacade::request('GET', $url);
-        $array=json_decode($json,true);
-        Log::var_dump($array);
-        //return view('auth.legislatorupdate',['members'=>$members]);
-    }
 }

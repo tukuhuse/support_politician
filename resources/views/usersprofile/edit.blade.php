@@ -16,16 +16,18 @@
             <label for="constituency_id">選挙区</label>
             {{ Form::select('constituency_id', $constituencies, $user->constituency_id, ['class' => 'form', 'id' => 'constituency_id']) }}
         </div>
-        <div>
+        <button id="legislatoradd">国会議員を追加</button>
+        <div id="legislator">
             <label for="legislator_id">応援している国会議員</label>
             {{ Form::select('legislator_id', $legislators,
             $userlegislator, ['class' => 'form', 'id' => 'legislator_id']) }}
         </div>
-        <div>
+        <div id="speaker_group">
             <label for="speaker_group_id">応援している政党</label>
             {{ Form::select('speaker_group_id', $speaker_group, $userspeakergroup, ['class' => 'form', 'id' => 'speaker_group_id']) }}
         </div>
         @method('PUT')
         <input type="submit" >
+        <button href="/user/{{$user->id}}">戻る</button>
     </form>
 @endsection

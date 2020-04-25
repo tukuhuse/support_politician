@@ -125,8 +125,8 @@ class UserprofilesController extends Controller
     {
         //
         $user = User::find($id);
-        dd($id);
-        //$user->delete();
-        return redirect('/top');
+        //dd($user);
+        $user->delete();
+        return redirect('/');
     }
 }

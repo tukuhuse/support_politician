@@ -7,7 +7,7 @@
 {{-- app.blade.phpの@yield('content')に以下のレイアウトを代入 --}}
 @section('content')
     <div id="menu_list">
-        <a href="#">議題検索ページ</a>
+        <a href="{{ route('topic1') }}">議題検索ページ</a>
         <a href="#">議員検索ページ</a>
         @guest
             <a href="{{ route('register') }}">新規登録</a>

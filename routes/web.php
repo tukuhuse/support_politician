@@ -18,9 +18,9 @@ Route::get('/', function() {
 */
 
 Route::get('/', 'Admin\NotLoginController@top');
+Route::get('topic1','kokkaiapi@search_topic')->name('topic1');
+Route::post('outcome','kokkaiapi@find_comment')->name('outcome');
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('users','UserprofilesController')->middleware('auth');
 
