@@ -26,33 +26,23 @@ class kokkaiapi extends Controller
         $url .= self::FIND_WAY['speech'];
         $url .= 'any=' . urlencode($request->search_word);
         $url .= '&searchRange='. urlencode('本文');
-        //$url .= "&recordPacking=json";
-        
-        //dd($url);
+        $url .= "&recordPacking=json";
         
         $data = $this->https_api($url);
         
-        dd($data);
+        foreach ($data["speechRecord"] as &$speech)
+        {
+            $speech["speech"]=str_replace("　","",substr($speech["speech"],stripos($speech["speech"],"　")));
+        }
         
         return view('searchresult', ['result' => $data]);
-        
-        /*
-        $data = $this->https_api($url);
-        return redirect('/searchresult',['data'=>$data]);
-        */
     }
     
     private function https_api($url)
     {
         $client = new Goutte\Client();
-        $xml = $client->request('GET',$url)->xml();
-        dd($xml);
-        //$obj = simplexml_load_string($XML);
-        //$data = json_decode(json_encode($obj),true);
-        
-        //$data = json_decode($json,true);
-        
-        //dd($json);
+        $json = $client->request('GET',$url);
+        $data = json_decode($client->getInternalResponse()->getContent(),true);
         
         return $data;
     }
