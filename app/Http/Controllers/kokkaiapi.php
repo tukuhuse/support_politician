@@ -38,11 +38,25 @@ class kokkaiapi extends Controller
         return view('searchresult', ['result' => $data]);
     }
     
-    public function detail(Request $request)
+    public function detail_topic(Request $request)
     {
+        $url = $this -> urlgenerater(2,1,null,$request->issueID);
         
+        $data = $this -> https_api($url);
+        
+        $data=$data["meetingRecord"][0]["speechRecord"];
+        
+        //データから余計な空白を除去(発言内容のみ)
+        foreach ($data as &$speech)
+        {
+            $speech["speech"]=str_replace("　","",substr($speech["speech"],stripos($speech["speech"],"　")));
+        }
+        
+        return view('detailmeeting', ['result' => $data]);
     }
     
+    //以下共通処理の関数
+    //http通信をする関数
     private function https_api($url)
     {
         $client = new Goutte\Client();
@@ -52,7 +66,8 @@ class kokkaiapi extends Controller
         return $data;
     }
     
-    private function urlgenerater($findway,$startrecord,$search_word,$issue=null)
+    //検索用のurlを作成する関数
+    private function urlgenerater($findway,$startrecord=1,$search_word=null,$issue=null)
     {
         $url = self::BASE_URL;
         //1なら会議検索、2なら発言検索
@@ -71,26 +86,21 @@ class kokkaiapi extends Controller
                 break;
         }
         
-        //$url .= '&any=' . urlencode($search_word);
         $url .= $this->queryword('&any=',urlencode($search_word));
-        //$url .= '&searchRange='. urlencode('本文');
-        $url .= $this->queryword('&any=',urlencode('本文'));
+        $url .= '&searchRange=' . urlencode('本文');
         $url .= $this->queryword('&issueID=',$issue);
-        /*
-        if (!empty($issue)) {
-            $url .= '&issueID=' . $issue;
-        }
-        */
+
         $url .= "&recordPacking=json";
         
         return $url;
     }
     
+    //検索文字に空白文字がある場合の処理
     private function queryword($keyword,$settingword=null)
     {
         $queryword=null;
         if (!empty($settingword)) {
-            $queryword=$keyword . $settingword;
+            $queryword = $keyword . $settingword;
         }
         return $queryword;
     }

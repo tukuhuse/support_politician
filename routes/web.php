@@ -20,7 +20,7 @@ Route::get('/', function() {
 Route::get('/', 'Admin\NotLoginController@top');
 Route::get('topic1','kokkaiapi@search_topic')->name('topic1');
 Route::post('outcome','kokkaiapi@find_comment')->name('outcome');
-Route::post('outcome/detaile', 'kokkaiapi@detail_topic')->name('detail');
+Route::post('outcome/detail', 'kokkaiapi@detail_topic')->name('detail');
 
 Auth::routes();
 Route::resource('users','UserprofilesController')->middleware('auth');

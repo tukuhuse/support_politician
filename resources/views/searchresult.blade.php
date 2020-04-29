@@ -4,8 +4,9 @@
 
 @section('content')
     @foreach ($result["speechRecord"] as $comment)
-        <form method="get" action="{{ url('/') }}">
+        <form method="post" action="{{ url('outcome/detail') }}">
             {{ csrf_field() }}
+            {{ Form::hidden('issueID',$comment["issueID"]) }}
             <button type="submit">
                 <div id="date">{{ $comment["date"] }}</div>
                 <div id="meeting">{{ $comment["nameOfMeeting"] }}</div>
