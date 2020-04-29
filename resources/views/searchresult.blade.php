@@ -4,12 +4,15 @@
 
 @section('content')
     @foreach ($result["speechRecord"] as $comment)
-        <div id="content">
-            <div id="speaker">{{ $comment["speaker"] }}</div>
-            <div id="speakerGroup">{{ $comment["speakerGroup"] }}</div>
-            <div id="speech">{{ $comment["speech"] }}</div>
-            <div id="speechID">{{ $comment["speechID"] }}</div>
-            <div id="issueID">{{ $comment["issueID"] }}</div>
-        </div>
+        <form method="get" action="{{ url('/') }}">
+            {{ csrf_field() }}
+            <button type="submit">
+                <div id="date">{{ $comment["date"] }}</div>
+                <div id="meeting">{{ $comment["nameOfMeeting"] }}</div>
+                <div id="speakerGroup">{{ $comment["speakerGroup"] }}</div>
+                <div id="speaker">{{ $comment["speaker"] }}</div>
+                <div id="speech">{{ $comment["speech"] }}</div>
+            </button>
+        </form>
     @endforeach
 @endsection
