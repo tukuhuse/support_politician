@@ -23,16 +23,9 @@ class kokkaiapi extends Controller
     
     public function find_comment(Request $request)
     {
-        //検索するurlを生成
         $url = $this->urlgenerater($request->invisible,1,$request->search_word);
-        //国会議事録で検索
         $data = $this->https_api($url);
-        
-        //データから余計な空白を除去(発言内容のみ)
-        foreach ($data["speechRecord"] as &$speech)
-        {
-            $speech["speech"]=str_replace("　","",substr($speech["speech"],stripos($speech["speech"],"　")));
-        }
+        $data["speechRecord"] = $this->speechformat($data["speechRecord"]);
         
         //viewに検索結果を渡す
         return view('searchresult', ['result' => $data]);
@@ -41,16 +34,13 @@ class kokkaiapi extends Controller
     public function detail_topic(Request $request)
     {
         $url = $this -> urlgenerater(2,1,null,$request->issueID);
-        
         $data = $this -> https_api($url);
         
         $data=$data["meetingRecord"][0]["speechRecord"];
+        unset($data[0]);
+        $data=array_values($data);
         
-        //データから余計な空白を除去(発言内容のみ)
-        foreach ($data as &$speech)
-        {
-            $speech["speech"]=str_replace("　","",substr($speech["speech"],stripos($speech["speech"],"　")));
-        }
+        $data = $this -> speechformat($data);
         
         return view('detailmeeting', ['result' => $data]);
     }
@@ -105,4 +95,18 @@ class kokkaiapi extends Controller
         return $queryword;
     }
     
+    //
+    private function speechformat($data)
+    {
+        $records = $data;
+        
+        foreach ($records as &$speech)
+        {
+            $speech["speech"]=str_replace("　","",substr($speech["speech"],stripos($speech["speech"],"　")));
+            $speech["speech"]=str_replace("―――――――――――――","",$speech["speech"]);
+        }
+        
+        return $records;
+        
+    }
 }
