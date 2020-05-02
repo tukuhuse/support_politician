@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Goutte;
+use App\Legislator;
+use App\Speaker_group;
+use App\Constituency;
 
 class kokkaiapi extends Controller
 {
@@ -45,6 +48,51 @@ class kokkaiapi extends Controller
         return view('detailmeeting', ['result' => $data]);
     }
     
+    public function search_legislator_topic(Request $request)
+    {
+        $legislators=Legislator::all()->pluck('name','id');
+        $constituencies=Constituency::all()->pluck('name','id');
+        $speakergroups=Speaker_group::all()->pluck('name','id');
+        return view('legislatortopic',['legislators' => $legislators,'constituencies' => $constituencies,'speaker_groups' => $speakergroups]);
+    }
+    
+    public function result_legislator_index(Request $request)
+    {
+        $legislator = Legislator::where('id',$request->legislator_id)->first();
+        $url = $this->urlgenerater($request->invisible,1,null,null,str_replace(" ","",$legislator->name));
+        $data = $this->https_api($url);
+        
+        $data["speechRecord"] = $this->speechformat($data["speechRecord"]);
+        return view('searchresult',['result' => $data]);
+    }
+    
+    public function result_constituency_index(Request $request)
+    {
+        $constituency = Constituency::where('id',$request->constituency_id)->first();
+        $legislators = Legislator::where('constituency_id',$constituency->id)->pluck('name');
+        
+        $url = $this->urlgenerater($request->invisible,1,null,null,$legislators);
+        $data = $this->https_api($url);
+        
+        $data["speechRecord"] = $this->speechformat($data["speechRecord"]);
+        return view('searchresult',['result' => $data]);
+    }
+    
+    public function result_speakergroup_index(Request $request)
+    {
+        $speakergroup = Speaker_group::where('id',$request->speaker_group_id)->first();
+        $legislators = Legislator::where('speaker_group_id',$speakergroup->id)->pluck('name');
+        
+        $url = $this->urlgenerater($request->invisible,1,null,null,$legislators);
+        
+        //dd($url);
+        
+        $data = $this->https_api($url);
+        
+        $data["speechRecord"] = $this->speechformat($data["speechRecord"]);
+        return view('searchresult',['result' => $data]);
+    }
+    
     //以下共通処理の関数
     //http通信をする関数
     private function https_api($url)
@@ -57,7 +105,7 @@ class kokkaiapi extends Controller
     }
     
     //検索用のurlを作成する関数
-    private function urlgenerater($findway,$startrecord=1,$search_word=null,$issue=null)
+    private function urlgenerater($findway,$startrecord=1,$search_word=null,$issue=null,$legislators=null)
     {
         $url = self::BASE_URL;
         //1なら会議検索、2なら発言検索
@@ -76,7 +124,15 @@ class kokkaiapi extends Controller
                 break;
         }
         
+        $legislatorquery = "";
+        foreach ($legislators as &$legislator) {
+            $legislator = str_replace(" ","",$legislator);
+            $legislatorquery .= " " . $legislator;
+        }
+        $legislatorquery = trim($legislatorquery);
+        
         $url .= $this->queryword('&any=',urlencode($search_word));
+        $url .= $this->queryword('&speaker=',$legislatorquery);
         $url .= '&searchRange=' . urlencode('本文');
         $url .= $this->queryword('&issueID=',$issue);
 

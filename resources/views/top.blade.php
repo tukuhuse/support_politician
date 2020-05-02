@@ -8,7 +8,7 @@
 @section('content')
     <div id="menu_list">
         <a href="{{ route('topic1') }}">議題検索ページ</a>
-        <a href="#">議員検索ページ</a>
+        <a href="{{ route('topic2') }}">議員検索ページ</a>
         @guest
             <a href="{{ route('register') }}">新規登録</a>
             <a href="{{ route('login') }}">ログイン</a>
