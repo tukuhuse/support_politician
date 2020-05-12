@@ -3,11 +3,29 @@
 @section('title','会議詳細')
 
 @section('content')
-    @foreach ($result as $comment)
-        <div id="comment">
-            <div id="speaker">{{ $comment["speaker"] }}</div>
-            <div id="speaker_group">{{ $comment["speakerGroup"] }}</div>
-            <div id="speech">{{ $comment["speech"] }}</div>
+    @foreach ($result as $proposal)
+        <div id="proposal">
+            <div id="speaker">{{ $proposal["speaker"] }}</div>
+            <div id="speaker_group">{{ $proposal["speakerGroup"] }}</div>
+            <div id="speech">{{ $proposal["speech"] }}</div>
+        </div>
+    @endforeach
+    @auth
+        {{ Form::open(['url'=>'comments','method'=>'get']) }}
+            {{ csrf_field() }}
+            {{ Form::Label('comment','コメント投稿') }}
+            <br>
+            {{ Form::textarea('create_comment') }}
+            {{ Form::hidden('issueID', $issueID) }}
+            <br>
+            {{ Form::submit() }}
+        {{ Form::close() }}
+    @endauth
+    @foreach ($comments as $comment)
+        <div id="othercomment">
+            <div id="writer">{{ $comment->user_name->name }}</div>
+            <div id="time">{{ $comment["created_at"] }}</div>
+            <div id="comment">{{ $comment["comment"] }}</div>
         </div>
     @endforeach
 @endsection

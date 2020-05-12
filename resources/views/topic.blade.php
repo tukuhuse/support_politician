@@ -3,7 +3,7 @@
 @section('title','議題検索ページ')
 
 @section('content')
-    <form action="{{ route('outcome') }}" method="POST">
+    <form action="{{ route('outcome') }}" method="GET">
         {{ csrf_field() }}
         {{ Form::hidden('invisible',1) }}
         {{ Form::label('search_way','発言内容検索') }}

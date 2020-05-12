@@ -4,7 +4,7 @@
 
 @section('content')
     @foreach ($result["speechRecord"] as $comment)
-        <form method="post" action="{{ url('outcome/detail') }}">
+        {{ Form::open(['method'=>'get','action'=>'kokkaiapi@detail_topic']) }}
             {{ csrf_field() }}
             {{ Form::hidden('issueID',$comment["issueID"]) }}
             <button type="submit">
@@ -14,6 +14,6 @@
                 <div id="speaker">{{ $comment["speaker"] }}</div>
                 <div id="speech">{{ $comment["speech"] }}</div>
             </button>
-        </form>
+        {{ Form::close() }}
     @endforeach
 @endsection
