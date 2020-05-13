@@ -24,8 +24,15 @@
     @foreach ($comments as $comment)
         <div id="othercomment">
             <div id="writer">{{ $comment->user_name->name }}</div>
-            <div id="time">{{ $comment["created_at"] }}</div>
+            <div id="time">{{ $comment["updated_at"] }}</div>
             <div id="comment">{{ $comment["comment"] }}</div>
+            @if ($comment["user_id"] == Auth::id())
+                {{ Form::open(['url' => 'comments/' . $comment->id]) }}
+                    {{ csrf_field() }}
+                    @method('DELETE')
+                    {{ Form::submit('削除') }}
+                {{ Form::close() }}
+            @endif
         </div>
     @endforeach
 @endsection

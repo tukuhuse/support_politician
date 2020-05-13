@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\User;
+use App\Comment;
 use App\Constituency;
 use App\Legislator;
 use App\Speaker_group;
@@ -58,7 +59,8 @@ class UserprofilesController extends Controller
         $user=User::find($id);
         $legislator=UserLegislator::where('user_id',$user->id)->first();
         $speaker_group=UserSpeakergroup::where('user_id',$user->id)->first();
-        return view('usersprofile.show', ['user'=>$user,'legislator'=>$legislator,'speaker_group'=>$speaker_group]);
+        $comments=Comment::where('user_id',$user->id)->get();
+        return view('usersprofile.show', ['user'=>$user,'legislator'=>$legislator,'speaker_group'=>$speaker_group,'comments'=>$comments]);
     }
 
     /**

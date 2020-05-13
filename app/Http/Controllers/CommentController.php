@@ -94,5 +94,9 @@ class CommentController extends Controller
     public function destroy($id)
     {
         //
+        $comment=Comment::find($id);
+        $comment->delete();
+        return redirect()->route('users.show',['id'=>$comment->user_id]);
+        //return redirect('users');
     }
 }

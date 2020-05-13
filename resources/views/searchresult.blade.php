@@ -4,9 +4,8 @@
 
 @section('content')
     @foreach ($result["speechRecord"] as $comment)
-        {{ Form::open(['method'=>'get','action'=>'kokkaiapi@detail_topic']) }}
+        {{ Form::open(['method'=>'get','url'=>'outcome/detail/' . $comment["issueID"]]) }}
             {{ csrf_field() }}
-            {{ Form::hidden('issueID',$comment["issueID"]) }}
             <button type="submit">
                 <div id="date">{{ $comment["date"] }}</div>
                 <div id="meeting">{{ $comment["nameOfMeeting"] }}</div>

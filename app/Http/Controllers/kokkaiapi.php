@@ -37,8 +37,9 @@ class kokkaiapi extends Controller
         return view('searchresult', ['result' => $data]);
     }
     
-    public function detail_topic(Request $request)
+    public function detail_topic($issueID)
     {
+        /*
         $url = $this -> urlgenerater(2,1,null,$request->issueID);
         $data = $this -> https_api($url);
         
@@ -50,6 +51,19 @@ class kokkaiapi extends Controller
         $issue = Comment::where('issueID',$request->issueID)->get();
         
         return view('detailmeeting', ['result' => $data,'issueID' => $request->issueID, 'comments' => $issue]);
+        */
+        $url = $this -> urlgenerater(2,1,null,$issueID);
+        $data = $this -> https_api($url);
+        
+        $data=$data["meetingRecord"][0]["speechRecord"];
+        unset($data[0]);
+        $data=array_values($data);
+        
+        $data = $this -> speechformat($data);
+        $comments = Comment::where('issueID',$issueID)->get();
+        
+        return view('detailmeeting', ['result' => $data,'issueID' => $issueID, 'comments' => $comments]);
+        
     }
     
     public function search_legislator_topic(Request $request)

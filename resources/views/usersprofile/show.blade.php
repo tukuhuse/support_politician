@@ -32,5 +32,17 @@
         @endif
     </div>
     <a href="/users/{{$user->id}}/edit">編集する</a>
+    @foreach($comments as $comment)
+        <div id="comment_id">{{ $comment->id }}</div>
+        <div id="issueID">{{ $comment->issueID }}</div>
+        <a href="{{ action('kokkaiapi@detail_topic',$comment->issueID) }}">討論詳細</a>
+        <div id="update_time">{{ $comment->update_time }}</div>
+        <div id="comment">{{ $comment->comment }}</div>
+        {{ Form::open(['url' => 'comments/' . $comment->id]) }}
+            {{ csrf_field() }}
+            @method('DELETE')
+            {{ Form::submit('削除') }}
+        {{ Form::close() }}
+    @endforeach
     <a href="/users">一覧に戻る</a>
 @endsection
