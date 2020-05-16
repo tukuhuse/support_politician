@@ -100,12 +100,20 @@ p {
   margin-bottom: 1rem;
 }
 
+i {
+  visibility: hidden;
+}
+
 i.fa-thumbs-up {
   color:#e54747;
 }
 
 i.fa-thumbs-down {
   color:#528fff;
+}
+
+i.active {
+  visibility: visible;
 }
 
 abbr[title],

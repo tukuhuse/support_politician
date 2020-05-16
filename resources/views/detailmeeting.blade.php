@@ -8,12 +8,10 @@
             <div id="speaker">{{ $proposal["speaker"] }}</div>
             <div id="speaker_group">{{ $proposal["speakerGroup"] }}</div>
             <div id="speech">{{ $proposal["speech"] }}</div>
-            <i class="fa-heart fa-3x px-16 active fas"></i>
-            <i class="fa-heart fa-3x px-16 far"></i>
-            <i class="fas fa-thumbs-up fa-3x"></i>
+            <i class="fas fa-thumbs-up fa-3x active"></i>
             <i class="far fa-thumbs-up fa-3x"></i>
             <i class="fas fa-thumbs-down fa-3x"></i>
-            <i class="far fa-thumbs-down fa-3x"></i>
+            <i class="far fa-thumbs-down fa-3x active"></i>
         </div>
     @endforeach
     @auth
