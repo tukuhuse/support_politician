@@ -36,13 +36,15 @@
         <div id="comment_id">{{ $comment->id }}</div>
         <div id="issueID">{{ $comment->issueID }}</div>
         <a href="{{ action('kokkaiapi@detail_topic',$comment->issueID) }}">討論詳細</a>
-        <div id="update_time">{{ $comment->update_time }}</div>
+        <div id="update_time">{{ $comment->updated_at }}</div>
         <div id="comment">{{ $comment->comment }}</div>
-        {{ Form::open(['url' => 'comments/' . $comment->id]) }}
-            {{ csrf_field() }}
-            @method('DELETE')
-            {{ Form::submit('削除') }}
-        {{ Form::close() }}
+        @if ($user->id == Auth::id())
+            {{ Form::open(['url' => 'comments/' . $comment->id]) }}
+                {{ csrf_field() }}
+                @method('DELETE')
+                {{ Form::submit('削除') }}
+            {{ Form::close() }}
+        @endif
     @endforeach
     <a href="/users">一覧に戻る</a>
 @endsection
