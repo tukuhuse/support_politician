@@ -8,8 +8,18 @@
             <div id="speaker">{{ $proposal["speaker"] }}</div>
             <div id="speaker_group">{{ $proposal["speakerGroup"] }}</div>
             <div id="speech">{{ $proposal["speech"] }}</div>
-            <a href="#"><i class="far fa-thumbs-up fa-3x fa-fw good active"></i></a>
-            <a href="#"><i class="far fa-thumbs-down fa-3x fa-fw bad active"></i></a>
+            <div style="display:inline-flex">
+                {{ Form::open() }}
+                    {{ csrf_field() }}
+                    {{ Form::hidden('state','1') }}
+                    <a href="#"><i class="far fa-thumbs-up fa-3x fa-fw good active"></i></a>
+                {{ Form::close() }}
+                {{ Form::open() }}
+                    {{ csrf_field() }}
+                    {{ Form::hidden('state','2') }}
+                    <a href="#"><i class="far fa-thumbs-down fa-3x fa-fw bad active"></i></a>
+                {{ Form::close() }}
+            </div>
         </div>
     @endforeach
     @auth
