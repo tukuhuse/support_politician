@@ -100,20 +100,12 @@ p {
   margin-bottom: 1rem;
 }
 
-i {
-  visibility: hidden;
-}
-
-i.fa-thumbs-up {
+i.good.active {
   color:#e54747;
 }
 
-i.fa-thumbs-down {
+i.bad.active {
   color:#528fff;
-}
-
-i.active {
-  visibility: visible;
 }
 
 abbr[title],
