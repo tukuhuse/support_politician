@@ -9,19 +9,23 @@
             <div id="speaker_group">{{ $proposal["speakerGroup"] }}</div>
             <div id="speech">{{ $proposal["speech"] }}</div>
             <div style="display:inline-flex">
-                {{ Form::open() }}
+                {{ Form::open(['method' => 'POST','action' => 'goodController@goodstatechange']) }}
                     {{ csrf_field() }}
+                    {{ Form::hidden('issueID',$issueID) }}
                     {{ Form::hidden('speechID',$proposal["speechID"]) }}
                     {{ Form::hidden('speaker',$proposal["speaker"]) }}
+                    {{ Form::hidden('speech',str_split($proposal["speech"],280)[0]) }}
                     {{ Form::hidden('state','1') }}
-                    <a href="#"><i class="far fa-thumbs-up fa-3x fa-fw good active"></i></a>
+                    <a href="javascript:void(0)" onclick="this.parentNode.submit()"><i class="far fa-thumbs-up fa-3x fa-fw good active"></i></a>
                 {{ Form::close() }}
-                {{ Form::open() }}
+                {{ Form::open(['method' => 'POST','action' => 'goodController@goodstatechange']) }}
                     {{ csrf_field() }}
+                    {{ Form::hidden('issueID',$issueID) }}
                     {{ Form::hidden('speechID',$proposal["speechID"]) }}
                     {{ Form::hidden('speaker',$proposal["speaker"]) }}
+                    {{ Form::hidden('speech',str_split($proposal["speech"],280)[0]) }}
                     {{ Form::hidden('state','2') }}
-                    <a href="#"><i class="far fa-thumbs-down fa-3x fa-fw bad active"></i></a>
+                    <a href="javascript:void(0)" onclick="this.parentNode.submit()"><i class="far fa-thumbs-down fa-3x fa-fw bad active"></i></a>
                 {{ Form::close() }}
             </div>
         </div>

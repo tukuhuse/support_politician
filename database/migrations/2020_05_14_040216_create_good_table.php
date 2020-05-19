@@ -18,8 +18,8 @@ class CreateGoodTable extends Migration
             $table->integer('user_id');
             $table->integer('status');
             $table->string('speechID');
-            $table->string('legislator_id');
-            $table->string('speech');
+            $table->string('legislator_name');
+            $table->string('speech',140);
             $table->timestamps();
         });
     }
