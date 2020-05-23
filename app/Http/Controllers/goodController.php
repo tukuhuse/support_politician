@@ -16,9 +16,8 @@ class goodController extends Controller
         $good_state = Good::where('speechID',$request->speechID)
             -> where('user_id',$user->id)
             -> first();
-        $good_state_exists = $good_state -> exists();
         //レコードが存在する場合の処理
-        if ($good_state_exists) {
+        if ($good_state) {
             //条件:DBに登録されている状態と送信された状態が同じか違うか
             //式１:対象のレコードを削除
             //式２:対象のレコードの状態を更新

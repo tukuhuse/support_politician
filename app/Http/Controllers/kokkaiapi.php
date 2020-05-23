@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Goutte;
 use Auth;
 use App\Comment;
+use App\Good;
 use App\Legislator;
 use App\Speaker_group;
 use App\Constituency;
@@ -39,19 +40,6 @@ class kokkaiapi extends Controller
     
     public function detail_topic($issueID)
     {
-        /*
-        $url = $this -> urlgenerater(2,1,null,$request->issueID);
-        $data = $this -> https_api($url);
-        
-        $data=$data["meetingRecord"][0]["speechRecord"];
-        unset($data[0]);
-        $data=array_values($data);
-        
-        $data = $this -> speechformat($data);
-        $issue = Comment::where('issueID',$request->issueID)->get();
-        
-        return view('detailmeeting', ['result' => $data,'issueID' => $request->issueID, 'comments' => $issue]);
-        */
         $url = $this -> urlgenerater(2,1,null,$issueID);
         $data = $this -> https_api($url);
         
@@ -61,9 +49,15 @@ class kokkaiapi extends Controller
         
         $data = $this -> speechformat($data);
         $comments = Comment::where('issueID',$issueID)->get();
+        if ( Auth::check() ) {
+            $good = Good::where('user_id',Auth::id())
+                ->where('speechID','like',"%$issueID%")
+                ->pluck('status','speechID');
+        } else {
+            $good = null;
+        }
         
-        return view('detailmeeting', ['result' => $data,'issueID' => $issueID, 'comments' => $comments]);
-        
+        return view('detailmeeting', ['result' => $data,'issueID' => $issueID, 'comments' => $comments, 'good' => $good]);
     }
     
     public function search_legislator_topic(Request $request)
