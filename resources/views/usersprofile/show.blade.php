@@ -32,19 +32,39 @@
         @endif
     </div>
     <a href="/users/{{$user->id}}/edit">編集する</a>
-    @foreach($comments as $comment)
-        <div id="comment_id">{{ $comment->id }}</div>
-        <div id="issueID">{{ $comment->issueID }}</div>
-        <a href="{{ action('kokkaiapi@detail_topic',$comment->issueID) }}">討論詳細</a>
-        <div id="update_time">{{ $comment->updated_at }}</div>
-        <div id="comment">{{ $comment->comment }}</div>
-        @if ($user->id == Auth::id())
-            {{ Form::open(['url' => 'comments/' . $comment->id]) }}
-                {{ csrf_field() }}
-                @method('DELETE')
-                {{ Form::submit('削除') }}
-            {{ Form::close() }}
-        @endif
-    @endforeach
+    <div id="user_good">
+        <div id="user_good_title">goodした発言一覧</div>
+        @foreach($goods as $good)
+            <div id="user_good_content">
+                <div id="legislator_name">{{ $good->legislator_name }}</div>
+                <div id="speech">{{ $good->speech }}</div>
+            </div>
+        @endforeach
+        <div id="user_bad_title">badした発言一覧</div>
+        @foreach($bads as $bad)
+            <div id="user_bad_content">
+                <div id="legislator_name">{{ $bad->legislator_name }}</div>
+                <div id="speech">{{ $bad->speech }}</div>
+            </div>
+        @endforeach
+    </div>
+    <div id="user_comment">
+        @foreach($comments as $comment)
+            <div id="user_comment_content">
+                <div id="comment_id">{{ $comment->id }}</div>
+                <div id="issueID">{{ $comment->issueID }}</div>
+                <a href="{{ action('kokkaiapi@detail_topic',$comment->issueID) }}">討論詳細</a>
+                <div id="update_time">{{ $comment->updated_at }}</div>
+                <div id="comment">{{ $comment->comment }}</div>
+                @if ($user->id == Auth::id())
+                    {{ Form::open(['url' => 'comments/' . $comment->id]) }}
+                        {{ csrf_field() }}
+                        @method('DELETE')
+                        {{ Form::submit('削除') }}
+                    {{ Form::close() }}
+                @endif
+            </div>
+        @endforeach
+    </div>
     <a href="/users">一覧に戻る</a>
 @endsection

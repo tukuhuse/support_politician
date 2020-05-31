@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Illuminate\Database\Query\Builder as QueryBuilder;
 use Goutte;
 use Auth;
 use App\Comment;
@@ -59,13 +57,7 @@ class kokkaiapi extends Controller
             $good = null;
         }
         
-        $goodcount = Good::select(['state','speechID','user_id']);
-        $goodcount = $goodcount->where('speechID','like',"%$issueID%");
-        
-        $array = $this->fetch_assoc($goodcount);
-        //$goodcount = array_count_values($goodcount);
-        
-        dump($array);
+        // /outcome/detail/120115328X00320200508#sf-dump-1982122758-ref21172
         
         return view('detailmeeting', ['result' => $data,'issueID' => $issueID, 'comments' => $comments, 'good' => $good]);
     }
@@ -191,23 +183,6 @@ class kokkaiapi extends Controller
         
         return $records;
         
-    }
-    
-    private function fetch_assoc($builder): array
-    {
-        $is_builder_type = ($builder instanceof QueryBuilder || $builder instanceof EloquentBuilder);
-        if ($is_builder_type === false) {
-            throw new \TypeError('$builder is not builder type.');
-        }
-    
-        $query    = $builder->toSql();
-        $bindings = $builder->getBindings();
-    
-        $pdo  = \DB::connection()->getPdo();
-        $stmt = $pdo->prepare($query);
-        $stmt->execute($bindings);
-    
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
 }

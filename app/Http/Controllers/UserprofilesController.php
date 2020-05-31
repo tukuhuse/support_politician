@@ -11,6 +11,7 @@ use App\Legislator;
 use App\Speaker_group;
 use App\UserLegislator;
 use App\UserSpeakergroup;
+use App\Good;
 
 class UserprofilesController extends Controller
 {
@@ -60,7 +61,9 @@ class UserprofilesController extends Controller
         $legislator=UserLegislator::where('user_id',$user->id)->first();
         $speaker_group=UserSpeakergroup::where('user_id',$user->id)->first();
         $comments=Comment::where('user_id',$user->id)->get();
-        return view('usersprofile.show', ['user'=>$user,'legislator'=>$legislator,'speaker_group'=>$speaker_group,'comments'=>$comments]);
+        $goods=Good::where('user_id',$user->id)->where('status',1)->get();
+        $bads=Good::where('user_id',$user->id)->where('status',2)->get();
+        return view('usersprofile.show', ['user'=>$user,'legislator'=>$legislator,'speaker_group'=>$speaker_group,'goods'=>$goods,'bads'=>$bads,'comments'=>$comments]);
     }
 
     /**
