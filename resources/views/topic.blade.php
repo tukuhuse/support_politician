@@ -8,6 +8,6 @@
         {{ Form::hidden('invisible',1) }}
         {{ Form::label('search_way','発言内容検索') }}
         {{ Form::text('search_word','',['class'=>'field','id'=>'search_word']) }}
-        {{ Form::submit('検索') }}
+        {{ Form::button('検索<i class="fas fa-search"></i>',['type'=>'submit']) }}
     </form>
 @endsection

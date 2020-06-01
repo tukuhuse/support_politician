@@ -47,6 +47,7 @@
 html {
   font-family: sans-serif;
   line-height: 1.15;
+  height: 100%;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
@@ -64,11 +65,24 @@ section {
   display: block;
 }
 
+nav {
+  height: 5%;
+}
+
+.view-all {
+  height: 100%;
+}
+
+main {
+  height: 95%;
+}
+
 body {
   margin: 0;
   font-family: "Raleway", sans-serif;
   font-size: 0.9rem;
   font-weight: 400;
+  height: 100%;
   line-height: 1.6;
   color: #212529;
   text-align: left;
@@ -110,6 +124,12 @@ i.good.active {
 
 i.bad.active {
   color:#528fff;
+}
+
+div .top_menu {
+  background-image: url('../img/image.jpg');
+  background-size:cover;
+  height: 90%;
 }
 
 abbr[title],
