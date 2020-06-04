@@ -5,40 +5,44 @@
 @section('content')
     @foreach ($result as $proposal)
         <div id="proposal">
-            <div id="speaker">{{ $proposal["speaker"] }}</div>
-            <div id="speaker_group">{{ $proposal["speakerGroup"] }}</div>
-            <div id="speech">{{ $proposal["speech"] }}</div>
-            <div style="display:inline-flex">
-                {{ Form::open(['method' => 'POST','action' => 'goodController@goodstatechange']) }}
-                    {{ csrf_field() }}
-                    {{ Form::hidden('issueID',$issueID) }}
-                    {{ Form::hidden('speechID',$proposal["speechID"]) }}
-                    {{ Form::hidden('speaker',$proposal["speaker"]) }}
-                    {{ Form::hidden('speech',str_split($proposal["speech"],280)[0]) }}
-                    {{ Form::hidden('state','1') }}
-                    <a href="javascript:void(0)" onclick="this.parentNode.submit()">
-                        @if (isset($good[$proposal["speechID"]]) and $good[$proposal["speechID"]] == 1 )
-                            <i class="far fa-thumbs-up fa-3x fa-fw good active"></i>
-                        @else
-                            <i class="far fa-thumbs-up fa-3x fa-fw"></i>
-                        @endif
-                    </a>
-                {{ Form::close() }}
-                {{ Form::open(['method' => 'POST','action' => 'goodController@goodstatechange']) }}
-                    {{ csrf_field() }}
-                    {{ Form::hidden('issueID',$issueID) }}
-                    {{ Form::hidden('speechID',$proposal["speechID"]) }}
-                    {{ Form::hidden('speaker',$proposal["speaker"]) }}
-                    {{ Form::hidden('speech',str_split($proposal["speech"],280)[0]) }}
-                    {{ Form::hidden('state','2') }}
-                    <a href="javascript:void(0)" onclick="this.parentNode.submit()">
-                        @if (isset($good[$proposal["speechID"]]) and $good[$proposal["speechID"]] == 2)
-                            <i class="far fa-thumbs-down fa-3x fa-fw bad active"></i>
-                        @else
-                            <i class="far fa-thumbs-down fa-3x fa-fw"></i>
-                        @endif
-                    </a>
-                {{ Form::close() }}
+            <div id="card" style="with: 30rem;">
+                <div id="card_content" class="card_body">
+                    <h4 id="speaker" class="card-title">{{ $proposal["speaker"] }}</h4>
+                    <h5 id="speaker_group" class="card-subtitle">{{ $proposal["speakerGroup"] }}</h5>
+                    <p id="speech" class="card-text">{{ $proposal["speech"] }}</p>
+                    <div style="display:inline-flex">
+                        {{ Form::open(['method' => 'POST','action' => 'goodController@goodstatechange']) }}
+                            {{ csrf_field() }}
+                            {{ Form::hidden('issueID',$issueID) }}
+                            {{ Form::hidden('speechID',$proposal["speechID"]) }}
+                            {{ Form::hidden('speaker',$proposal["speaker"]) }}
+                            {{ Form::hidden('speech',str_split($proposal["speech"],280)[0]) }}
+                            {{ Form::hidden('state','1') }}
+                            <a href="javascript:void(0)" onclick="this.parentNode.submit()">
+                                @if (isset($good[$proposal["speechID"]]) and $good[$proposal["speechID"]] == 1 )
+                                    <i class="far fa-thumbs-up fa-3x fa-fw good active"></i>
+                                @else
+                                    <i class="far fa-thumbs-up fa-3x fa-fw"></i>
+                                @endif
+                            </a>
+                        {{ Form::close() }}
+                        {{ Form::open(['method' => 'POST','action' => 'goodController@goodstatechange']) }}
+                            {{ csrf_field() }}
+                            {{ Form::hidden('issueID',$issueID) }}
+                            {{ Form::hidden('speechID',$proposal["speechID"]) }}
+                            {{ Form::hidden('speaker',$proposal["speaker"]) }}
+                            {{ Form::hidden('speech',str_split($proposal["speech"],280)[0]) }}
+                            {{ Form::hidden('state','2') }}
+                            <a href="javascript:void(0)" onclick="this.parentNode.submit()">
+                                @if (isset($good[$proposal["speechID"]]) and $good[$proposal["speechID"]] == 2)
+                                    <i class="far fa-thumbs-down fa-3x fa-fw bad active"></i>
+                                @else
+                                    <i class="far fa-thumbs-down fa-3x fa-fw"></i>
+                                @endif
+                            </a>
+                        {{ Form::close() }}
+                    </div>
+                </div>
             </div>
         </div>
     @endforeach
