@@ -5,10 +5,12 @@
 @section('content')
     @foreach ($result as $proposal)
         <div id="proposal">
-            <div id="card" style="with: 30rem;">
+            <div id="card" class="card" style="width: 60rem; margin-left: auto; margin-right: auto;">
+                <div id="card_header" class="card-header" style="display:inline-flex; display:flex; justify-content: space-between;">
+                    <h4 id="speaker_group">{{ $proposal["speakerGroup"] }}</h4>
+                    <h4 id="speaker">{{ $proposal["speaker"] }}</h4>
+                </div>
                 <div id="card_content" class="card_body">
-                    <h4 id="speaker" class="card-title">{{ $proposal["speaker"] }}</h4>
-                    <h5 id="speaker_group" class="card-subtitle">{{ $proposal["speakerGroup"] }}</h5>
                     <p id="speech" class="card-text">{{ $proposal["speech"] }}</p>
                     <div style="display:inline-flex">
                         {{ Form::open(['method' => 'POST','action' => 'goodController@goodstatechange']) }}
