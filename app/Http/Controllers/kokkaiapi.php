@@ -179,6 +179,7 @@ class kokkaiapi extends Controller
         {
             $speech["speech"]=str_replace("　","",substr($speech["speech"],stripos($speech["speech"],"　")));
             $speech["speech"]=str_replace("―――――――――――――","",$speech["speech"]);
+            $speech["speech"]=str_replace("─────────────","",$speech["speech"]);
         }
         
         return $records;

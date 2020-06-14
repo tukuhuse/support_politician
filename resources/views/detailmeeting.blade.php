@@ -5,12 +5,12 @@
 @section('content')
     @foreach ($result as $proposal)
         <div id="proposal">
-            <div id="card" class="card" style="width: 60rem; margin-left: auto; margin-right: auto;">
-                <div id="card_header" class="card-header" style="display:inline-flex; display:flex; justify-content: space-between;">
+            <div id="card" class="card">
+                <div id="card_header" class="card-header">
                     <h4 id="speaker_group">{{ $proposal["speakerGroup"] }}</h4>
                     <h4 id="speaker">{{ $proposal["speaker"] }}</h4>
                 </div>
-                <div id="card_content" class="card_body">
+                <div id="card_content" class="card-body">
                     <p id="speech" class="card-text">{{ $proposal["speech"] }}</p>
                     <div style="display:inline-flex">
                         {{ Form::open(['method' => 'POST','action' => 'goodController@goodstatechange']) }}
@@ -20,11 +20,11 @@
                             {{ Form::hidden('speaker',$proposal["speaker"]) }}
                             {{ Form::hidden('speech',str_split($proposal["speech"],280)[0]) }}
                             {{ Form::hidden('state','1') }}
-                            <a href="javascript:void(0)" onclick="this.parentNode.submit()">
+                            <a href="javascript:void(0)" onclick="this.parentNode.submit()" style="none;">
                                 @if (isset($good[$proposal["speechID"]]) and $good[$proposal["speechID"]] == 1 )
-                                    <i class="far fa-thumbs-up fa-3x fa-fw good active"></i>
+                                    <i class="far fa-thumbs-up fa-2x fa-fw good active"></i>
                                 @else
-                                    <i class="far fa-thumbs-up fa-3x fa-fw"></i>
+                                    <i class="far fa-thumbs-up fa-2x fa-fw"></i>
                                 @endif
                             </a>
                         {{ Form::close() }}
@@ -37,9 +37,9 @@
                             {{ Form::hidden('state','2') }}
                             <a href="javascript:void(0)" onclick="this.parentNode.submit()">
                                 @if (isset($good[$proposal["speechID"]]) and $good[$proposal["speechID"]] == 2)
-                                    <i class="far fa-thumbs-down fa-3x fa-fw bad active"></i>
+                                    <i class="far fa-thumbs-down fa-2x fa-fw bad active"></i>
                                 @else
-                                    <i class="far fa-thumbs-down fa-3x fa-fw"></i>
+                                    <i class="far fa-thumbs-down fa-2x fa-fw"></i>
                                 @endif
                             </a>
                         {{ Form::close() }}
