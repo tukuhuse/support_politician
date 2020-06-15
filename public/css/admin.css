@@ -2,11 +2,11 @@ i.fa-fw {
     color: silver;
 }
 
-i.fa-thumbs-up .active {
+i.fa-thumbs-up.active {
     color: red;
 }
 
-i.fa-thumbs-down .active {
+i.fa-thumbs-down.active {
     color: blue;
 }
 

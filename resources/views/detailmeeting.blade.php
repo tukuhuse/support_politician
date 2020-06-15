@@ -18,13 +18,13 @@
                             {{ Form::hidden('issueID',$issueID) }}
                             {{ Form::hidden('speechID',$proposal["speechID"]) }}
                             {{ Form::hidden('speaker',$proposal["speaker"]) }}
-                            {{ Form::hidden('speech',str_split($proposal["speech"],280)[0]) }}
+                            {{ Form::hidden('speech',mb_substr($proposal["speech"],0,140)) }}
                             {{ Form::hidden('state','1') }}
                             <a href="javascript:void(0)" onclick="this.parentNode.submit()" style="none;">
                                 @if (isset($good[$proposal["speechID"]]) and $good[$proposal["speechID"]] == 1 )
-                                    <i class="far fa-thumbs-up fa-2x fa-fw good active"></i>
+                                    <i class="far fa-thumbs-up fa-2x fa-fw good active" id="btn-good"></i>
                                 @else
-                                    <i class="far fa-thumbs-up fa-2x fa-fw"></i>
+                                    <i class="far fa-thumbs-up fa-2x fa-fw" id="btn-good"></i>
                                 @endif
                             </a>
                         {{ Form::close() }}
@@ -33,13 +33,13 @@
                             {{ Form::hidden('issueID',$issueID) }}
                             {{ Form::hidden('speechID',$proposal["speechID"]) }}
                             {{ Form::hidden('speaker',$proposal["speaker"]) }}
-                            {{ Form::hidden('speech',str_split($proposal["speech"],280)[0]) }}
+                            {{ Form::hidden('speech',mb_substr($proposal["speech"],0,140)) }}
                             {{ Form::hidden('state','2') }}
                             <a href="javascript:void(0)" onclick="this.parentNode.submit()">
                                 @if (isset($good[$proposal["speechID"]]) and $good[$proposal["speechID"]] == 2)
-                                    <i class="far fa-thumbs-down fa-2x fa-fw bad active"></i>
+                                    <i class="far fa-thumbs-down fa-2x fa-fw bad active" id="btn-bad"></i>
                                 @else
-                                    <i class="far fa-thumbs-down fa-2x fa-fw"></i>
+                                    <i class="far fa-thumbs-down fa-2x fa-fw" id="btn-bad"></i>
                                 @endif
                             </a>
                         {{ Form::close() }}
