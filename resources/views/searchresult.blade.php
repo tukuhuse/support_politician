@@ -6,7 +6,7 @@
     @foreach ($result["speechRecord"] as $comment)
         {{ Form::open(['method'=>'get','url'=>'outcome/detail/' . $comment["issueID"]]) }}
             {{ csrf_field() }}
-            <a href="javascript:void(0)" onclick="this.parentNode.submit()" style="color:inherit;text-decoration:none;">
+            <a href="javascript:void(0)" onclick="this.parentNode.submit()" class="nonstyle">
                 <div class="card">
                     <div class="card-header d-flex">
                         <h4 id="speakerGroup" class="p-2 bd-highlight">{{ $comment["speakerGroup"] }}</h4>

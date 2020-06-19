@@ -1,11 +1,13 @@
+/*
 $(function() {
-    $('#btn-good').on('click',function(e){
+    $('#btn-good').click(function(e){
         //フォームが送信された時、デフォルトの通信を止める
         e.stopPropagation();
+        
         //通信を行う
         $.ajax({
             type: 'POST',
-            url: '',
+            url: '#',
             data: {
                 'speechID': $speechID,
                 'status': $status,
@@ -20,6 +22,11 @@ $(function() {
             //通信失敗時の処理
             alert('データの同期に失敗');
         })
-        
     })
+    
 });
+*/
+$('a#btn-good').on('click',function() {
+    alert('成功');
+    return false;
+})

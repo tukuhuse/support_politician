@@ -22,3 +22,13 @@ i.fa-thumbs-down.active {
     display:flex;
     justify-content: space-between;
 }
+
+a.nonstyle {
+    text-decoration: none;
+    color: inherit;
+}
+
+a.nonstyle:hover {
+    text-decoration: none;
+    color: inherit;
+}
