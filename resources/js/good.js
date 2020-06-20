@@ -26,7 +26,15 @@ $(function() {
     
 });
 */
-$('a#btn-good').on('click',function() {
+$(function(goodbutton) {
     alert('成功');
     return false;
+});
+/*
+$(function() {
+    $('a#btn-good').on('click',function() {
+        alert('成功');
+        return false;
+    });
 })
+*/
