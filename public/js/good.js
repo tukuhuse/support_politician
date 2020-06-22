@@ -122,8 +122,26 @@ $(function() {
 });
 */
 $(function (goodbutton) {
-  alert('成功');
-  return false;
+  //e.preventDefault();
+  $('#btn-good').on('click', function (e) {
+    alert('第一段階成功');
+    e.preventDefault();
+    $.ajax({
+      type: 'POST',
+      url: 'goodstate',
+      data: {
+        'speechID': $speechID,
+        'status': $status,
+        'legislator_id': $legislator_id,
+        'speech': $speech
+      },
+      dataType: 'json'
+    }).done(function (results) {
+      alert('成功');
+    }).fail(function (err) {
+      alert('データ通信失敗');
+    });
+  });
 });
 /*
 $(function() {
