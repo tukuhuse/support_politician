@@ -98,15 +98,19 @@ $(function (goodbutton) {
   $('#btn-good').on('click', function (e) {
     var $this = $(this);
     var $issueID = $this.parent().find('input:hidden[name="issueID"]').val();
-    alert($issueID);
+    var $speechID = $this.parent().find('input:hidden[name="speechID"]').val();
+    var $status = $this.parent().find('input:hidden[name="status"]').val();
+    var $speaker = $this.parent().find('input:hidden[name="speaker"]').val();
+    var $speech = $this.parent().find('input:hidden[name="speech"]').val();
     e.preventDefault();
     $.ajax({
       type: 'POST',
       url: 'goodstate',
       data: {
+        'issueID': $issueID,
         'speechID': $speechID,
         'status': $status,
-        'legislator_id': $legislator_id,
+        'speaker': $speaker,
         'speech': $speech
       },
       dataType: 'json'

@@ -4,7 +4,10 @@ $(function(goodbutton) {
         
         const $this = $(this);
         const $issueID = $this.parent().find('input:hidden[name="issueID"]').val();
-        alert($issueID);
+        const $speechID = $this.parent().find('input:hidden[name="speechID"]').val();
+        const $status = $this.parent().find('input:hidden[name="status"]').val();
+        const $speaker = $this.parent().find('input:hidden[name="speaker"]').val();
+        const $speech = $this.parent().find('input:hidden[name="speech"]').val();
         
         e.preventDefault();
         
@@ -12,9 +15,10 @@ $(function(goodbutton) {
             type: 'POST',
             url: 'goodstate',
             data: {
+                'issueID': $issueID,
                 'speechID': $speechID,
                 'status': $status,
-                'legislator_id': $legislator_id,
+                'speaker': $speaker,
                 'speech': $speech
             },
             dataType: 'json'
