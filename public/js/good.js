@@ -96,28 +96,33 @@
 $(function (goodbutton) {
   //e.preventDefault();
   $('#btn-good').on('click', function (e) {
+    e.preventDefault();
     var $this = $(this);
     var $issueID = $this.parent().find('input:hidden[name="issueID"]').val();
     var $speechID = $this.parent().find('input:hidden[name="speechID"]').val();
     var $status = $this.parent().find('input:hidden[name="status"]').val();
     var $speaker = $this.parent().find('input:hidden[name="speaker"]').val();
     var $speech = $this.parent().find('input:hidden[name="speech"]').val();
-    e.preventDefault();
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
     $.ajax({
       type: 'POST',
-      url: 'goodstate',
+      url: '/ajaxupdate',
+      dataType: "json",
       data: {
         'issueID': $issueID,
         'speechID': $speechID,
         'status': $status,
         'speaker': $speaker,
         'speech': $speech
-      },
-      dataType: 'json'
+      }
     }).done(function (results) {
       alert('成功');
-    }).fail(function (err) {
-      alert('データ通信失敗');
+    }).fail(function (jqXHR) {
+      alert('失敗');
     });
   });
 });

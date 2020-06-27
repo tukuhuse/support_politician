@@ -19,7 +19,7 @@
                             {{ Form::hidden('speechID',$proposal["speechID"]) }}
                             {{ Form::hidden('speaker',$proposal["speaker"]) }}
                             {{ Form::hidden('speech',mb_substr($proposal["speech"],0,140)) }}
-                            {{ Form::hidden('state','1') }}
+                            {{ Form::hidden('status','1') }}
                             <a href="javascript:goodbutton" class="nonstyle" id="btn-good">
                                 @if (isset($good[$proposal["speechID"]]) and $good[$proposal["speechID"]] == 1 )
                                     <i class="far fa-thumbs-up fa-2x fa-fw good active"></i>

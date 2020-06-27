@@ -32,3 +32,4 @@ Route::resource('users','UserprofilesController')->middleware('auth');
 Route::resource('comments','CommentController');
 Route::get('datasetting','dataController@legislator')->name('datasetting');
 Route::post('goodstate','goodController@goodstatechange')->name('goodstate');
+Route::post('ajaxupdate','goodController@ajaxupdate')->name('ajaxupdate');
