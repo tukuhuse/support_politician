@@ -32,3 +32,8 @@ a.nonstyle:hover {
     text-decoration: none;
     color: inherit;
 }
+
+div.btn-status-change {
+    display: inline-flex;
+    cursor: pointer;
+}

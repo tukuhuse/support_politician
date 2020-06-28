@@ -10,40 +10,33 @@
                     <h4 id="speaker_group">{{ $proposal["speakerGroup"] }}</h4>
                     <h4 id="speaker">{{ $proposal["speaker"] }}</h4>
                 </div>
-                <div id="card_content" class="card-body">
+                <div id="card_content" class="card-body" speechID="{{ $proposal['speechID'] }}">
                     <p id="speech" class="card-text">{{ $proposal["speech"] }}</p>
-                    <div style="display:inline-flex">
-                        {{ Form::open(['method' => 'POST','action' => 'goodController@goodstatechange']) }}
-                            {{ csrf_field() }}
-                            {{ Form::hidden('issueID',$issueID) }}
-                            {{ Form::hidden('speechID',$proposal["speechID"]) }}
-                            {{ Form::hidden('speaker',$proposal["speaker"]) }}
-                            {{ Form::hidden('speech',mb_substr($proposal["speech"],0,140)) }}
-                            {{ Form::hidden('status','1') }}
-                            <a href="javascript:goodbutton" class="nonstyle" id="btn-good">
-                                @if (isset($good[$proposal["speechID"]]) and $good[$proposal["speechID"]] == 1 )
-                                    <i class="far fa-thumbs-up fa-2x fa-fw good active"></i>
+                    {{ Form::open(['method' => 'POST','action' => 'goodController@goodstatechange']) }}
+                        {{ csrf_field() }}
+                        {{ Form::hidden('issueID',$issueID) }}
+                        {{ Form::hidden('speechID',$proposal["speechID"]) }}
+                        {{ Form::hidden('speaker',$proposal["speaker"]) }}
+                        {{ Form::hidden('speech',mb_substr($proposal["speech"],0,140)) }}
+                        @for ($status=1;$status<=2;$status++)
+                            <div onclick="javascript:goodbutton" class="btn-status-change" name="{{ $status }}">
+                                {{ Form::hidden('status',$status) }}
+                                @if ($status == 1)
+                                    @if (isset($good[$proposal["speechID"]]) and $good[$proposal["speechID"]] == 1 )
+                                        <i class="far fa-thumbs-up fa-2x fa-fw active"></i>
+                                    @else
+                                        <i class="far fa-thumbs-up fa-2x fa-fw"></i>
+                                    @endif
                                 @else
-                                    <i class="far fa-thumbs-up fa-2x fa-fw"></i>
+                                    @if (isset($good[$proposal["speechID"]]) and $good[$proposal["speechID"]] == 2)
+                                        <i class="far fa-thumbs-down fa-2x fa-fw active"></i>
+                                    @else
+                                        <i class="far fa-thumbs-down fa-2x fa-fw"></i>
+                                    @endif
                                 @endif
-                            </a>
-                        {{ Form::close() }}
-                        {{ Form::open(['method' => 'POST','action' => 'goodController@goodstatechange']) }}
-                            {{ csrf_field() }}
-                            {{ Form::hidden('issueID',$issueID) }}
-                            {{ Form::hidden('speechID',$proposal["speechID"]) }}
-                            {{ Form::hidden('speaker',$proposal["speaker"]) }}
-                            {{ Form::hidden('speech',mb_substr($proposal["speech"],0,140)) }}
-                            {{ Form::hidden('state','2') }}
-                            <a href="javascript:void(0)" onclick="this.parentNode.submit()" class="nonstyle">
-                                @if (isset($good[$proposal["speechID"]]) and $good[$proposal["speechID"]] == 2)
-                                    <i class="far fa-thumbs-down fa-2x fa-fw bad active"></i>
-                                @else
-                                    <i class="far fa-thumbs-down fa-2x fa-fw"></i>
-                                @endif
-                            </a>
-                        {{ Form::close() }}
-                    </div>
+                            </div>
+                        @endfor
+                    {{ Form::close() }}
                 </div>
             </div>
         </div>

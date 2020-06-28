@@ -94,15 +94,15 @@
 /***/ (function(module, exports) {
 
 $(function (goodbutton) {
-  //e.preventDefault();
-  $('#btn-good').on('click', function (e) {
+  $('.btn-status-change').on('click', function (e) {
     e.preventDefault();
     var $this = $(this);
     var $issueID = $this.parent().find('input:hidden[name="issueID"]').val();
     var $speechID = $this.parent().find('input:hidden[name="speechID"]').val();
-    var $status = $this.parent().find('input:hidden[name="status"]').val();
+    var $status = $this.children('input:hidden[name="status"]').val();
     var $speaker = $this.parent().find('input:hidden[name="speaker"]').val();
     var $speech = $this.parent().find('input:hidden[name="speech"]').val();
+    console.log($status);
     $.ajaxSetup({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -120,7 +120,13 @@ $(function (goodbutton) {
         'speech': $speech
       }
     }).done(function (results) {
-      alert('成功');
+      $this.children().toggleClass('active');
+
+      if ($status == 1) {
+        $this.parent().children('div.btn-status-change[name$="2"]').children('i').removeClass('active');
+      } else {
+        $this.parent().children('div.btn-status-change[name$="1"]').children('i').removeClass('active');
+      }
     }).fail(function (jqXHR) {
       alert('失敗');
     });
