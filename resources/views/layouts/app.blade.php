@@ -11,7 +11,6 @@
 
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!--<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>-->
     <script src="{{ asset('js/good.js') }}" defer></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
 
