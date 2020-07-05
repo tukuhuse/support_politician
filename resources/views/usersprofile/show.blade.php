@@ -59,8 +59,8 @@
                 @if ($user->id == Auth::id())
                     {{ Form::open(['url' => 'comments/' . $comment->id]) }}
                         {{ csrf_field() }}
-                        @method('DELETE')
-                        {{ Form::submit('削除') }}
+                        {{ Form::hidden('commentid', $comment["id"]) }}
+                        <input type="button" class="commentdelete" value="削除" onclick="javascript:commentdelete">
                     {{ Form::close() }}
                 @endif
             </div>
