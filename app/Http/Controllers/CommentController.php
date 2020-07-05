@@ -40,15 +40,12 @@ class CommentController extends Controller
         //
         $user = Auth::user();
         $comment = Comment::create([
-            'issueID' => $request->issueID,
             'user_id' => $user->id,
-            'comment' => $request->create_comment
+            'issueID' => $request->issueID,
+            'comment' => $request->comment
         ]);
         
-        //$issueid = array('issueID'=>$request->issueID);
-        
-        //リダイレクト処理要相談
-        return back();
+        return response(\Illuminate\Http\Response::HTTP_OK);
     }
 
     /**
@@ -96,7 +93,7 @@ class CommentController extends Controller
         //
         $comment=Comment::find($id);
         $comment->delete();
-        //redirect先の分岐方法は後日相談
-        return redirect()->route('users.show',['id'=>$comment->user_id]);
+        
+        return response(\Illuminate\Http\Response::HTTP_OK);
     }
 }

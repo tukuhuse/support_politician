@@ -42,26 +42,35 @@
         </div>
     @endforeach
     @auth
-        {{ Form::open(['url'=>'comments','method'=>'get']) }}
+        {{ Form::open(['url'=>'comments','method'=>'post','class'=>'card']) }}
             {{ csrf_field() }}
-            {{ Form::Label('comment','コメント投稿') }}
-            <br>
-            {{ Form::textarea('create_comment') }}
-            {{ Form::hidden('issueID', $issueID) }}
-            <br>
-            {{ Form::submit() }}
+            <div class="card-body" name="comment">
+                {{ Form::Label('comment','コメント投稿',['class'=>'card-title']) }}
+                <br>
+                {{ Form::textarea('create_comment') }}
+                {{ Form::hidden('issueID', $issueID) }}
+                <br>
+            </div>
+            <input type="button" id="commentadd" value="投稿" onclick="javascript:commentadd">
         {{ Form::close() }}
     @endauth
     @foreach ($comments as $comment)
-        <div id="othercomment">
-            <div id="writer">{{ $comment->user_name->name }}</div>
-            <div id="time">{{ $comment["updated_at"] }}</div>
-            <div id="comment">{{ $comment["comment"] }}</div>
+        <div id="othercomment" class="card">
+            <div id="writer" class="card-header">{{ $comment->user_name->name }}</div>
+            <div id="comment" class="card-text">{{ $comment["comment"] }}</div>
+            <div id="time" class="card-footer">{{ $comment["updated_at"] }}</div>
             @if ($comment["user_id"] == Auth::id())
+                <!--
                 {{ Form::open(['url' => 'comments/' . $comment->id]) }}
                     {{ csrf_field() }}
                     @method('DELETE')
                     {{ Form::submit('削除') }}
+                {{ Form::close() }}
+                -->
+                {{ Form::open(['url' => 'comments/' . $comment["id"]]) }}
+                    {{ csrf_field() }}
+                    {{ Form::hidden('commentid', $comment["id"]) }}
+                    <input type="button" class="commentdelete" value="削除" onclick="javascript:commentdelete">
                 {{ Form::close() }}
             @endif
         </div>
