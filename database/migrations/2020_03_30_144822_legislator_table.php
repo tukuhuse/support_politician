@@ -18,11 +18,9 @@ class LegislatorTable extends Migration
         Schema::create('legislators', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');                 //議員名を保存
-            $table->string('birthday');             //生年月日を保存
             $table->integer('gikai_id');            //1なら衆議院、2なら参議院
             $table->integer('speaker_group_id');    //所属政党idを保存
             $table->integer('constituency_id');     //選挙区idを保存
-            $table->string('url')->nullable();      //SNSのURL
             $table->timestamps();
         });
     }

@@ -60,13 +60,6 @@
             <div id="comment" class="card-text">{{ $comment["comment"] }}</div>
             <div id="time" class="card-footer">{{ $comment["updated_at"] }}</div>
             @if ($comment["user_id"] == Auth::id())
-                <!--
-                {{ Form::open(['url' => 'comments/' . $comment->id]) }}
-                    {{ csrf_field() }}
-                    @method('DELETE')
-                    {{ Form::submit('削除') }}
-                {{ Form::close() }}
-                -->
                 {{ Form::open(['url' => 'comments/' . $comment["id"]]) }}
                     {{ csrf_field() }}
                     {{ Form::hidden('commentid', $comment["id"]) }}
