@@ -16,6 +16,7 @@ class Speaker_groupImport implements ToModel
     {
         return new Speaker_group([
             //
+            'name' => $row[0]
         ]);
     }
 }

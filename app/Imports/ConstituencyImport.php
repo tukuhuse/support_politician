@@ -16,6 +16,7 @@ class ConstituencyImport implements ToModel
     {
         return new Constituency([
             //
+            'name' => $row[0]
         ]);
     }
 }

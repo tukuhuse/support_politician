@@ -33,3 +33,4 @@ Route::resource('comments','CommentController');
 Route::get('datasetting','dataController@legislator')->name('datasetting');
 Route::post('goodstate','goodController@goodstatechange')->name('goodstate');
 Route::post('ajaxupdate','goodController@ajaxupdate')->name('ajaxupdate');
+route::post('legislator_import','dataimportController@store')->name('legislator_import');

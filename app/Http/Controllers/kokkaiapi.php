@@ -13,14 +13,6 @@ use App\Constituency;
 
 class kokkaiapi extends Controller
 {
-    //
-    
-    const BASE_URL = 'https://kokkai.ndl.go.jp/api/';
-    const FIND_WAY = [
-        'list' => 'meeting_list?',
-        'meeting' => 'meeting?',
-        'speech' => 'speech?',
-    ];
     
     public function search_topic()
     {
@@ -103,8 +95,6 @@ class kokkaiapi extends Controller
         $url = $this->urlgenerater($request->invisible,1,null,null,null,$speakergroup->name);
         $data = $this->https_api($url);
         
-        dd($data);
-        
         $data["speechRecord"] = $this->speechformat($data["speechRecord"]);
         return view('searchresult',['result' => $data]);
     }
@@ -123,11 +113,11 @@ class kokkaiapi extends Controller
     //検索用のurlを作成する関数
     private function urlgenerater($findway,$startrecord=1,$search_word=null,$issue=null,$legislators=null,$speakergroup=null)
     {
-        $url = self::BASE_URL;
+        $url = config.get('const.BASE_URL');
         //1なら会議検索、2なら発言検索
         switch ($findway) {
             case 1:
-                $url .= self::FIND_WAY['speech'];
+                $url .= config('const.FIND_WAY.speech');
                 $url .= 'maximumRecords=100';
                 break;
             case 2:
