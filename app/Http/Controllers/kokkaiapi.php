@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Goutte;
 use Auth;
 use App\Comment;
@@ -95,11 +96,20 @@ class kokkaiapi extends Controller
         $url = $this->urlgenerater($request->invisible,1,null,null,null,$speakergroup->name);
         $data = $this->https_api($url);
         
+        dd($data);
+        
         $data["speechRecord"] = $this->speechformat($data["speechRecord"]);
         return view('searchresult',['result' => $data]);
     }
     
     //以下共通処理の関数
+    
+    const BASE_URL = 'https://kokkai.ndl.go.jp/api/';
+    const FIND_WAY = [
+        'meeting' => 'meeting?',
+        'speech' => 'speech?',
+    ];
+    
     //http通信をする関数
     private function https_api($url)
     {
@@ -113,20 +123,17 @@ class kokkaiapi extends Controller
     //検索用のurlを作成する関数
     private function urlgenerater($findway,$startrecord=1,$search_word=null,$issue=null,$legislators=null,$speakergroup=null)
     {
-        $url = config.get('const.BASE_URL');
+        
+        $url = self::BASE_URL;
         //1なら会議検索、2なら発言検索
         switch ($findway) {
             case 1:
-                $url .= config('const.FIND_WAY.speech');
+                $url .= self::FIND_WAY['speech'];
                 $url .= 'maximumRecords=100';
                 break;
             case 2:
                 $url .= self::FIND_WAY['meeting'];
                 $url .= 'maximumRecords=1';
-                break;
-            case 3:
-                $url .= self::FIND_WAY['list'];
-                $url .= 'maximumRecords=30';
                 break;
         }
         
