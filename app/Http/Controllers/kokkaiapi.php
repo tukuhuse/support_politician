@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
 use Goutte;
 use Auth;
 use App\Comment;
@@ -70,7 +69,10 @@ class kokkaiapi extends Controller
         $url = $this->urlgenerater($request->invisible,1,null,null,$legislators);
         $data = $this->https_api($url);
         
-        $data["speechRecord"] = $this->speechformat($data["speechRecord"]);
+        if ($data["numberOfRecords"] > 0) {
+            $data["speechRecord"] = $this->speechformat($data["speechRecord"]);
+        }
+        
         return view('searchresult',['result' => $data]);
     }
     
@@ -82,7 +84,10 @@ class kokkaiapi extends Controller
         $url = $this->urlgenerater($request->invisible,1,null,null,$legislators);
         $data = $this->https_api($url);
         
-        $data["speechRecord"] = $this->speechformat($data["speechRecord"]);
+        if ($data["numberOfRecords"] > 0) {
+            $data["speechRecord"] = $this->speechformat($data["speechRecord"]);
+        }
+        
         return view('searchresult',['result' => $data]);
     }
     
@@ -96,20 +101,22 @@ class kokkaiapi extends Controller
         $url = $this->urlgenerater($request->invisible,1,null,null,null,$speakergroup->name);
         $data = $this->https_api($url);
         
-        dd($data);
+        if ($data["numberOfRecords"] > 0) {
+            $data["speechRecord"] = $this->speechformat($data["speechRecord"]);
+        }
         
-        $data["speechRecord"] = $this->speechformat($data["speechRecord"]);
         return view('searchresult',['result' => $data]);
     }
     
-    //以下共通処理の関数
-    
+    //以下共通処理
+    //使用する定数
     const BASE_URL = 'https://kokkai.ndl.go.jp/api/';
     const FIND_WAY = [
         'meeting' => 'meeting?',
         'speech' => 'speech?',
     ];
     
+    //以下共通処理の関数
     //http通信をする関数
     private function https_api($url)
     {
