@@ -32,7 +32,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Constituency','constituency_id');
     }
-
+    
+    public function goods()
+    {
+        return $this->belongsToMany('App\Good');
+    }
+    
     /**
      * The attributes that should be cast to native types.
      *

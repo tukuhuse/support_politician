@@ -49,8 +49,6 @@ class kokkaiapi extends Controller
             $good = null;
         }
         
-        // /outcome/detail/120115328X00320200508#sf-dump-1982122758-ref21172
-        
         return view('detailmeeting', ['result' => $data,'issueID' => $issueID, 'comments' => $comments, 'good' => $good]);
     }
     
@@ -93,7 +91,6 @@ class kokkaiapi extends Controller
     
     public function result_speakergroup_index(Request $request)
     {
-        //$normalspeakergroup = array("自由民主党",);
         
         $speakergroup = Speaker_group::where('id',$request->speaker_group_id)->first();
         $legislators = Legislator::where('speaker_group_id',$speakergroup->id)->pluck('name');
