@@ -22,11 +22,13 @@ class CreateUserGoodTable extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->ondelete('cascade');
+                ->ondelete('cascade')
+                ->onupdate('cascade');
             $table->foreign('good_id')
                 ->references('id')
                 ->on('good')
-                ->ondelete('cascade');
+                ->ondelete('cascade')
+                ->onupdate('cascade');
             
             $table->unique(['user_id','good_id']);
             

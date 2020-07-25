@@ -9,6 +9,7 @@
     <div id="menu_list" class="top_menu">
         <a href="{{ route('topic1') }}">議題検索ページ</a>
         <a href="{{ route('topic2') }}">議員検索ページ</a>
+        <a href="{{ route('search') }}">新規作成中</a>
         @guest
             <a href="{{ route('register') }}">新規登録</a>
             <a href="{{ route('login') }}">ログイン</a>

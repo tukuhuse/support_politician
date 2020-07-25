@@ -1,9 +1,11 @@
 <?php
 
 namespace App;
+//namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -35,7 +37,7 @@ class User extends Authenticatable
     
     public function goods()
     {
-        return $this->belongsToMany('App\Good');
+        return $this->belongsToMany('App\Good', 'user_good', 'user_id','good_id');
     }
     
     /**
