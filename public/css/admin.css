@@ -37,3 +37,11 @@ div.btn-status-change {
     display: inline-flex;
     cursor: pointer;
 }
+
+div.search_way {
+    margin:3px;
+}
+
+h3.user {
+    text-align: center;
+}

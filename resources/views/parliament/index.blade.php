@@ -7,7 +7,7 @@
         <div>検索条件に該当する発言はありませんでした。</div>
     @else
         @foreach ($result["speechRecord"] as $comment)
-            {{ Form::open(['method'=>'get','url'=>'outcome/detail/' . $comment["issueID"]]) }}
+            {{ Form::open(['method'=>'get','url'=>'parliament/show/' . $comment["issueID"]]) }}
                 {{ csrf_field() }}
                 <a href="javascript:void(0)" onclick="this.parentNode.submit()" class="nonstyle">
                     <div class="card">

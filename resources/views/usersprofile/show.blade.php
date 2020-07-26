@@ -31,30 +31,65 @@
             <div id="user_profile_content">{{ $legislator->legislator_name->name }}</div>
         @endif
     </div>
-    <a href="/users/{{$user->id}}/edit">編集する</a>
     <div id="user_good">
-        <div id="user_good_title">goodした発言一覧</div>
+        <center><h3 id="user_good_title" class="user title">goodした発言一覧</h3></center>
         @foreach($goods as $good)
-            <div id="user_good_content">
-                <div id="legislator_name">{{ $good->legislator_name }}</div>
-                <div id="speech">{{ $good->speech }}</div>
+            <div class="accordion">
+                <div class="card">
+                    <div class="card-header" id="{{ 'good' . $loop->iteration }}">
+                        <h4 class="mb-0">
+                            {{ Form::button($good->legislator_name, ['class'=>'btn btn-link btn-block text-left','data-target'=>'#goodspeech'.$loop->iteration,'data-toggle'=>'collapse','aria-expanded'=>'false','aria-controls'=>'goodspeech'.$loop->iteration]) }}
+                        </h4>
+                    </div>
+                    <div id="{{ 'goodspeech' . $loop->iteration }}" class="collapse" aria-labelledby="{{ 'good' . $loop->iteration }}" data-parent="#user_good_title">
+                        <div class="card-body">
+                            {{ $good->speech }}
+                        </div>
+                        <div class="card-footer">
+                            <?php $issueID = explode('_',$good->speechID)[0]; ?>
+                            <a href="{{ url('parliament/show/'.$issueID) }}">討論詳細</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         @endforeach
-        <div id="user_bad_title">badした発言一覧</div>
+        <center><h3 id="user_bad_title" class="user title">badした発言一覧</h3></center>
         @foreach($bads as $bad)
-            <div id="user_bad_content">
-                <div id="legislator_name">{{ $bad->legislator_name }}</div>
-                <div id="speech">{{ $bad->speech }}</div>
+            <div class="accordion">
+                <div class="card">
+                    <div class="card-header" id="{{ 'bad' . $loop->iteration }}">
+                        <h4 class="mb-0">
+                            {{ Form::button($bad->legislator_name, ['class'=>'btn btn-link btn-block text-left','data-target'=>'#badspeech'.$loop->iteration,'data-toggle'=>'collapse','aria-expanded'=>'false','aria-controls'=>'badspeech'.$loop->iteration]) }}
+                        </h4>
+                    </div>
+                    <div id="{{ 'badspeech' . $loop->iteration }}" class="collapse" aria-labelledby="{{ 'bad' . $loop->iteration }}" data-parent="#user_bad_title">
+                        <div class="card-body">
+                            {{ $bad->speech }}
+                        </div>
+                        <div class="card-footer">
+                            <?php $issueID = explode('_',$bad->speechID)[0]; ?>
+                            <a href="{{ url('parliament/show/'.$issueID) }}">討論詳細</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         @endforeach
     </div>
     <div id="user_comment">
+        <center><h3 class="comment">コメント一覧</h3></center>
         @foreach($comments as $comment)
-            <div id="user_comment_content">
-                <div id="comment_id">{{ $comment->id }}</div>
-                <div id="issueID">{{ $comment->issueID }}</div>
-                <a href="{{ action('kokkaiapi@detail_topic',$comment->issueID) }}">討論詳細</a>
-                <div id="update_time">{{ $comment->updated_at }}</div>
+            <div class="card">
+                <div class="card-header">
+                    コメント投稿日:{{ $comment->created_at }}
+                </div>
+                <div class="card-body">
+                    {{ $comment->comment }}
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url('parliament/show/'.$comment->issueID) }}">討論詳細</a>
+                </div>
+            </div>
+            <!--
                 <div id="comment">{{ $comment->comment }}</div>
                 @if ($user->id == Auth::id())
                     {{ Form::open(['url' => 'comments/' . $comment->id]) }}
@@ -63,8 +98,9 @@
                         <input type="button" class="commentdelete" value="削除" onclick="javascript:commentdelete">
                     {{ Form::close() }}
                 @endif
-            </div>
+            -->
         @endforeach
     </div>
+    <a href="/users/{{$user->id}}/edit">編集する</a>
     <a href="/users">一覧に戻る</a>
 @endsection
