@@ -28,7 +28,7 @@
                         <div class="form-group row">
                             <label for="user_name" class="col-md-4 col-form-label text-md-right">{{ __('messages.Name') }}</label>
                             <div class="col-md-6">
-                                <input id="user_name" type="text" class="form-control" name="name" value="{{ old('Name') }}" required autocomplete="Name" autofocus>
+                                <input id="user_name" type="text" class="form-control" name="Name" value="{{ old('Name') }}" required autocomplete="Name" autofocus>
                                 @error('Name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
