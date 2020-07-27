@@ -11,15 +11,8 @@
 |
 */
 
-/*
-Route::get('/', function() {
-    return view('welcome');
-});
-*/
 
-Route::get('/', 'Admin\NotLoginController@top');
-
-Route::get('parliament/search','parliamentController@search')->name('search');
+Route::get('/','parliamentController@search')->name('search');
 Route::get('parliament/index','parliamentController@index')->name('index');
 Route::get('parliament/show/{issueID}','parliamentController@show')->name('show');
 
