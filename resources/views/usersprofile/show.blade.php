@@ -6,31 +6,49 @@
 
 {{-- app.blade.phpの@yield('content')に以下のレイアウトを代入 --}}
 @section('content')
-    <div id="user_profile_detail">
-        <div id="user_profile_subject">ユーザー名</div>
-        <div id="user_profile_content">{{ $user->name }}</div>
-    </div>
-    <div id="user_profile_detail">
-        <div id="user_profile_subject">選挙区</div>
-        @if(empty($user->constituency_id))
-        @else
-            <div id="user_profile_content">{{ $user->constituency_name->name }}</div>
-        @endif
-    </div>
-    <div id="user_profile_detail">
-        <div id="user_profile_subject">支援している政党</div>
-        @if(empty($speaker_group->user_id))
-        @else
-            <div id="user_profile_content">{{ $speaker_group->speaker_name->name }}</div>
-        @endif
-    </div>
-    <div id="user_profile_detail">
-        <div id="user_profile_subject">支援している国会議員</div>
-        @if(empty($legislator->user_id))
-        @else
-            <div id="user_profile_content">{{ $legislator->legislator_name->name }}</div>
-        @endif
-    </div>
+    <center>
+        <h3>ユーザー情報</h3>
+        <ul class="list-group list-group-flush">
+            @if($user->id == Auth::id())
+                <li class="list-gruop-item d-flex justify-content-between align-items-center">
+                    <a class="btn btn-outline-danger" href="/users" role="button">一覧に戻る</a>
+                    <a class="btn btn-outline-primary" href="/users/{{$user->id}}/edit" role="button">編集する</a>
+                </li>
+            @else
+                <li class="list-gruop-item d-flex justify-content-end align-items-center">
+                    <a class="btn btn-outline-danger" href="/users" role="button">一覧に戻る</a>
+                </li>
+            @endif
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                ユーザー名：
+                <span>{{ $user->name }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                選挙区：
+                @if(empty($user->constituency_id))
+                    <span>選択なし</span>
+                @else
+                    <span>{{ $user->constituency_name->name }}</span>
+                @endif
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                応援している政党：
+                @if(empty($speaker_group->user_id))
+                    <span>選択なし</span>
+                @else
+                    <span>{{ $speaker_group->speaker_name->name }}</span>
+                @endif
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                応援している議員：
+                @if(empty($legislator->user_id))
+                    <span>選択なし</span>
+                @else
+                    <span>{{ $legislator->legislator_name->name }}</span>
+                @endif
+            </li>
+        </ul>
+    </center>
     <div id="user_good">
         <center><h3 id="user_good_title" class="user title">goodした発言一覧</h3></center>
         @foreach($goods as $good)
@@ -101,6 +119,5 @@
             -->
         @endforeach
     </div>
-    <a href="/users/{{$user->id}}/edit">編集する</a>
-    <a href="/users">一覧に戻る</a>
+    
 @endsection
