@@ -10,13 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Auth::routes();
 
 Route::get('/','parliamentController@search')->name('search');
 Route::get('parliament/index','parliamentController@index')->name('index');
 Route::get('parliament/show/{issueID}','parliamentController@show')->name('show');
 
-Auth::routes();
 Route::resource('users','UserprofilesController',['except' => ['create','store']])->middleware('auth');
 Route::resource('comments','CommentController', ['only' => ['store','destroy']]);
 Route::get('datasetting','dataController@legislator')->name('datasetting');
