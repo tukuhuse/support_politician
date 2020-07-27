@@ -6,28 +6,61 @@
 
 {{-- app.blade.phpの@yield('content')に以下のレイアウトを代入 --}}
 @section('content')
-    <form action="/users/{{$user->id}}" method="post">
+    {{ Form::open(['method'=>'POST', 'url'=>'/users/'.$user->id]) }}
         {{ csrf_field() }}
-        <div>
-            <label for="name">ユーザー名</label>
-            <input type="text" name="name" value="{{$user->name}}">
+        <div class="form-group row">
+            {{ Form::Label('username', 'ユーザー名', ['class'=>'col-sm-2 col-form-label']) }}
+            <div class="col-sm-5">
+                {{ Form::text('username', $user->name,['class'=>'form-control']) }}
+            </div>
         </div>
-        <div>
-            <label for="constituency_id">選挙区</label>
-            {{ Form::select('constituency_id', $constituencies, $user->constituency_id, ['class' => 'form', 'id' => 'constituency_id']) }}
+        <div class="form-group row">
+            {{ Form::Label('constituency','選挙区',['class'=>'col-sm-2 col-form-label']) }}
+            <div class="col-sm-5">
+                {{ Form::select('constituency_id', $constituencies, $user->constituency_id, ['class' => 'form-control', 'placeholder' => '選択してください']) }}
+            </div>
         </div>
-        <button id="legislatoradd">国会議員を追加</button>
-        <div id="legislator">
-            <label for="legislator_id">応援している国会議員</label>
-            {{ Form::select('legislator_id', $legislators,
-            $userlegislator, ['class' => 'form', 'id' => 'legislator_id']) }}
+        <div class="form-group row">
+            {{ Form::Label('speaker_group', '応援している政党', ['class' => 'col-sm-2 col-form-label']) }}
+            <div class="col-sm-5">
+                {{ Form::select('speaker_group_id', $speaker_group, $userspeakergroup, ['class' => 'form-control', 'placeholder' => '選択してください']) }}
+            </div>
         </div>
-        <div id="speaker_group">
-            <label for="speaker_group_id">応援している政党</label>
-            {{ Form::select('speaker_group_id', $speaker_group, $userspeakergroup, ['class' => 'form', 'id' => 'speaker_group_id']) }}
+        <div class="form-group row">
+            {{ Form::Label('legislator', '応援している議員', ['class' => 'col-sm-2 col-form-label']) }}
+            <div class="col-sm-5">
+                {{ Form::select('legislator_id', $legislators, $userlegislator,['class'=>'form-control', 'placeholder' => '選択してください']) }}
+            </div>
         </div>
         @method('PUT')
-        <input type="submit" >
-        <button href="/user/{{$user->id}}">戻る</button>
-    </form>
+        <div class="col-sm-7">
+            <div class="form-group row justify-content-between">
+                <a href="/users/{{$user->id}}" class="btn btn-outline-danger" role="button">戻る</a>
+                {{ Form::submit('ユーザー情報を更新', ['class' => 'btn btn-outline-success']) }}
+            </div>
+        </div>
+    {{ Form::close() }}
+    @if (count($comments)!=0)
+        <div id="user_comment">
+            <center><h3 class="comment">コメント一覧</h3></center>
+            @foreach($comments as $comment)
+                <div class="card">
+                    <div class="card-header">
+                        コメント投稿日:{{ $comment->created_at }}
+                    </div>
+                    <div class="card-body">
+                        {{ $comment->comment }}
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ url('parliament/show/'.$comment->issueID) }}">討論詳細</a>
+                        {{ Form::open(['url' => 'comments/' . $comment->id]) }}
+                            {{ csrf_field() }}
+                            {{ Form::hidden('commentid', $comment["id"]) }}
+                            <input type="button" class="commentdelete" value="削除" onclick="javascript:commentdelete">
+                        {{ Form::close() }}
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @endif
 @endsection

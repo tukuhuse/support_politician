@@ -79,6 +79,7 @@ class UserprofilesController extends Controller
         $constituencies=Constituency::all()->pluck('name','id');
         $legislators=Legislator::all()->pluck('name','id');
         $speaker_groups=Speaker_group::all()->pluck('name','id');
+        $comments=Comment::where('user_id',$user->id)->get();
         
         //フォームの初期値
         $legislator=UserLegislator::where('user_id',$user->id)->pluck('legislator_id');
@@ -86,7 +87,7 @@ class UserprofilesController extends Controller
         
         return view('usersprofile.edit', 
         ['user'=>$user,'userlegislator'=>$legislator,'userspeakergroup'=>$speaker_group,
-        'constituencies'=>$constituencies,'legislators'=>$legislators,'speaker_group'=>$speaker_groups]);
+        'constituencies'=>$constituencies,'legislators'=>$legislators,'speaker_group'=>$speaker_groups,'comments'=>$comments]);
         
     }
 
@@ -105,19 +106,25 @@ class UserprofilesController extends Controller
         $user->constituency_id = $request->constituency_id;
         $user->save();
         
-        //とりあえずレコードが一つしかない場合
-        $userlegislator=UserLegislator::updateOrCreate(
-            ['user_id'=>$user->id],
-            ['user_id'=>$user->id,'legislator_id'=>$request->legislator_id]);
+        //応援している政党の情報を更新
+        if (is_null($request->speaker_group_id)) $userspeakergroup=UserSpeakergroup::where(['user_id'=>$user->id])->delete();
+        else {
+            $userspeakergroup=UserSpeakergroup::updateOrCreate(
+                ['user_id'=>$user->id],
+                ['user_id'=>$user->id,'speaker_group_id'=>$request->speaker_group_id]
+            );
+        }
         
-        $userspeakergroup=UserSpeakergroup::updateOrCreate(
-            ['user_id'=>$user->id],
-            ['user_id'=>$user->id,'speaker_group_id'=>$request->speaker_group_id]);
+        //応援している議員の情報を更新
+        if (is_null($request->legislator_id)) $userlegislator=UserLegislator::where(['user_id'=>$user->id])->delete();
+        else {
+            $userlegislator=UserLegislator::updateOrCreate(
+                ['user_id'=>$user->id],
+                ['user_id'=>$user->id,'legislator_id'=>$request->legislator_id]
+            );
+        }
         
-        //複数ある場合は中間テーブルであるUserLegislator等のidをeditに追加
-        
-        
-        return redirect("/users/" . $id);
+        return redirect("/users/" . $id . "/edit");
     }
 
     /**
@@ -128,10 +135,6 @@ class UserprofilesController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $user = User::find($id);
-        //dd($user);
-        $user->delete();
-        return redirect('/');
+        
     }
 }
