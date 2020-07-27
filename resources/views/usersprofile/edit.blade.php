@@ -6,7 +6,7 @@
 
 {{-- app.blade.phpの@yield('content')に以下のレイアウトを代入 --}}
 @section('content')
-    {{ Form::open(['method'=>'POST', 'url'=>'/users/'.$user->id]) }}
+    {{ Form::open(['method'=>'POST', 'url'=>'/users/'.$user->id, 'class'=>'center']) }}
         {{ csrf_field() }}
         <div class="form-group row">
             {{ Form::Label('username', 'ユーザー名', ['class'=>'col-sm-2 col-form-label']) }}

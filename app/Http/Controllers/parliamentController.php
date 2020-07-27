@@ -39,8 +39,7 @@ class parliamentController extends Controller
         
         $url = $this->urlgenerater(1,1,$request->search_word,null,$legislators,$speakergroup);
         $data = $this->https_api($url);
-        
-        if ($data["numberOfRecords"] > 0) $data["speechRecord"] = $this->speechformat($data["speechRecord"]);
+        if ($data["message"] != "(19007)検索条件を指定してください。" && $data["numberOfRecords"] > 0) $data["speechRecord"] = $this->speechformat($data["speechRecord"]);
         
         return view('parliament.index',['result' => $data]);
     }

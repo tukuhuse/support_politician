@@ -56,9 +56,11 @@
     @endauth
     @foreach ($comments as $comment)
         <div id="othercomment" class="card">
-            <div id="writer" class="card-header">{{ $comment->user_name->name }}</div>
-            <div id="comment" class="card-text">{{ $comment["comment"] }}</div>
-            <div id="time" class="card-footer">{{ $comment["updated_at"] }}</div>
+            <div class="card-header">{{ $comment->user_name->name }}</div>
+            <div class="card-body">
+                <div class="card-text">{{ $comment["comment"] }}</div>
+            </div>
+            <div class="card-footer">{{ $comment["updated_at"] }}</div>
             @if ($comment["user_id"] == Auth::id())
                 {{ Form::open(['url' => 'comments/' . $comment["id"]]) }}
                     {{ csrf_field() }}

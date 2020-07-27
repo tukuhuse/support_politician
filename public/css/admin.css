@@ -49,3 +49,9 @@ h3.user {
 ul.list-group {
     width: 60em;
 }
+
+form.center {
+    width: 60em;
+    margin-right: auto;
+    margin-left: auto;
+}
