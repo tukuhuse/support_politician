@@ -15,7 +15,7 @@
                     <a class="btn btn-outline-primary" href="/users/{{$user->id}}/edit" role="button">編集する</a>
                 </li>
             @else
-                <li class="list-gruop-item d-flex justify-content-end align-items-center">
+                <li class="list-gruop-item d-flex justify-content-start align-items-center">
                     <a class="btn btn-outline-danger" href="/users" role="button">一覧に戻る</a>
                 </li>
             @endif
