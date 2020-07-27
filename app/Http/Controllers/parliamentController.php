@@ -38,10 +38,11 @@ class parliamentController extends Controller
         else $speakergroup = null;
         
         $url = $this->urlgenerater(1,1,$request->search_word,null,$legislators,$speakergroup);
+        $flag = is_null($request->search_word) && is_null($request->constituency_id) && is_null($request->legislator_id) && is_null($request->speaker_group_id);
         $data = $this->https_api($url);
-        if ($data["message"] != "(19007)検索条件を指定してください。" && $data["numberOfRecords"] > 0) $data["speechRecord"] = $this->speechformat($data["speechRecord"]);
+        if (!$flag && $data["numberOfRecords"] > 0) $data["speechRecord"] = $this->speechformat($data["speechRecord"]);
         
-        return view('parliament.index',['result' => $data]);
+        return view('parliament.index',['result' => $data,'searchflag' => $flag]);
     }
     
     //討論の詳細を表示

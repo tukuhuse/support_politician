@@ -3,7 +3,7 @@
 @section('title','検索結果')
 
 @section('content')
-    @if ($result["message"] == "(19007)検索条件を指定してください。")
+    @if ($searchflag)
         <div>検索条件を指定してください。</div>
     @elseif ($result["numberOfRecords"] == 0)
         <div>検索条件に該当する発言はありませんでした。</div>
