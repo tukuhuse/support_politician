@@ -18,7 +18,7 @@ class parliamentController extends Controller
         $legislators=Legislator::all()->pluck('name','id');
         $constituencies=Constituency::all()->pluck('name','id');
         $speakergroups=Speaker_group::all()->pluck('name','id');
-        return view('parliament.search',['legislators' => $legislators,'constituencies' => $constituencies,'speaker_groups' => $speakergroups]);
+        return view('top',['legislators' => $legislators,'constituencies' => $constituencies,'speaker_groups' => $speakergroups]);
     }
     
     //検索する処理
