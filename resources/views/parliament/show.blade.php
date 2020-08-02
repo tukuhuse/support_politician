@@ -57,20 +57,22 @@
             @auth
                 {{ Form::open(['url'=>'comments','method'=>'post','class'=>'card']) }}
                     {{ csrf_field() }}
+                    <div class="card-header">
+                        {{ Form::Label('comment','コメント入力') }}
+                    </div>
                     <div class="card-body" name="comment">
-                        {{ Form::Label('comment','コメント投稿',['class'=>'card-title']) }}
-                        <br>
                         {{ Form::textarea('create_comment') }}
                         {{ Form::hidden('issueID', $issueID) }}
-                        <br>
                     </div>
-                    <input type="button" id="commentadd" value="投稿" onclick="javascript:commentadd">
+                    <div class="card-footer">
+                        {{ Form::button('投稿',['id'=>'commentadd','class'=>'btn btn-outline-primary','onclick'=>'javascript:commentadd']) }}
+                    </div>
                 {{ Form::close() }}
             @endauth
             @foreach ($comments as $comment)
                 <div class="card">
                     <div class="card-header">
-                        <a href="/users/{{ $comment->user_id }}">
+                        <a href="{{ url('/users/' . $comment->user_id) }}">
                             {{ $comment->user_name->name }}
                         </a>
                     </div>

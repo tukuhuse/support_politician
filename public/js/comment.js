@@ -96,8 +96,8 @@
 $(function (commentadd) {
   $('#commentadd').on('click', function () {
     var $this = $(this);
-    var $issueID = $this.parent().find('div[name="comment"]').children('input:hidden[name="issueID"]').val();
-    var $comment = $this.parent().find('div[name="comment"]').children('textarea[name="create_comment"]').val();
+    var $issueID = $this.parent().parent().find('div[name="comment"]').children('input:hidden[name="issueID"]').val();
+    var $comment = $this.parent().parent().find('div[name="comment"]').children('textarea[name="create_comment"]').val();
     $.ajaxSetup({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

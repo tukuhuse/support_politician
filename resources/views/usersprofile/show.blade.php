@@ -110,6 +110,13 @@
                     </div>
                     <div class="card-footer">
                         <a href="{{ url('parliament/show/'.$comment->issueID) }}">討論詳細</a>
+                        @if ($comment["user_id"] == Auth::id())
+                            {{ Form::open(['url' => 'comments/' . $comment["id"]]) }}
+                                {{ csrf_field() }}
+                                {{ Form::hidden('commentid', $comment["id"]) }}
+                                {{ Form::button('削除', ['class' => 'commentdelete btn btn-outline-danger', 'onclick' => 'javascript:commentdelete']) }}
+                            {{ Form::close() }}
+                        @endif
                     </div>
                 </div>
             @endforeach

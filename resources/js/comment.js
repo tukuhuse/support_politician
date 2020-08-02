@@ -3,8 +3,8 @@ $(function(commentadd) {
     $('#commentadd').on('click',function() {
         
         const $this = $(this);
-        const $issueID = $this.parent().find('div[name="comment"]').children('input:hidden[name="issueID"]').val();
-        const $comment = $this.parent().find('div[name="comment"]').children('textarea[name="create_comment"]').val();
+        const $issueID = $this.parent().parent().find('div[name="comment"]').children('input:hidden[name="issueID"]').val();
+        const $comment = $this.parent().parent().find('div[name="comment"]').children('textarea[name="create_comment"]').val();
         
         $.ajaxSetup({
             headers: {
