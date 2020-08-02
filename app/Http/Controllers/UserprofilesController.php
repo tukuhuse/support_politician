@@ -75,6 +75,10 @@ class UserprofilesController extends Controller
     public function edit($id)
     {
         //
+        if (Auth::id()!=$id) {
+            return redirect('/');
+        }
+        
         $user=User::find($id);
         $constituencies=Constituency::all()->pluck('name','id');
         $legislators=Legislator::all()->pluck('name','id');
@@ -88,6 +92,7 @@ class UserprofilesController extends Controller
         return view('usersprofile.edit', 
         ['user'=>$user,'userlegislator'=>$legislator,'userspeakergroup'=>$speaker_group,
         'constituencies'=>$constituencies,'legislators'=>$legislators,'speaker_group'=>$speaker_groups,'comments'=>$comments]);
+        
         
     }
 
