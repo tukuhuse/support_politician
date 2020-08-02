@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->string('password');
-            $table->integer('controll_level')->default(1);  //1は管理者ユーザー、2は一般ユーザー
+            $table->integer('controll_level')->default(2);  //1は管理者ユーザー、2は一般ユーザー
             $table->integer('constituency_id')->nullable(); //投票する選挙区
             $table->rememberToken();
             $table->timestamps();
