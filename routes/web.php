@@ -12,7 +12,7 @@
 */
 Auth::routes();
 
-Route::get('/','parliamentController@search')->name('search');
+Route::get('/','parliamentController@search_screen')->name('search_screen');
 Route::get('parliament/index','parliamentController@index')->name('index');
 Route::get('parliament/show/{issueID}','parliamentController@show')->name('show');
 

@@ -2,6 +2,11 @@
 
 @section('title','会議詳細')
 
+@section('javascript')
+    <script src="{{ asset('js/comment.js') }}" defer></script>
+    <script src="{{ asset('js/good.js') }}" defer></script>
+@endsection
+
 @section('content')
     <h3 class="page-title">討論詳細</h3>
     <ul class="nav nav-tabs" id="myTab" role="tablist">

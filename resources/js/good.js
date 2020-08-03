@@ -10,8 +10,6 @@ $(function(goodbutton) {
         const $speaker = $this.parent().find('input:hidden[name="speaker"]').val();
         const $speech = $this.parent().find('input:hidden[name="speech"]').val();
         
-        console.log($status);
-        
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

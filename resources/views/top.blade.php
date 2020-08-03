@@ -2,6 +2,10 @@
 
 @section('title','討論検索ページ')
 
+@section('javascript')
+    <script src="{{ asset('js/search_legislator.js') }}" defer></script>
+@endsection
+
 @section('content')
     <h3 class="page-title">検索内容入力（AND検索）</h3>
     {{ Form::open(['route' => 'index', 'method' => 'GET', 'class' => 'form-horizontal center']) }}

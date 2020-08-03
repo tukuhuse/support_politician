@@ -13,7 +13,8 @@ use App\Constituency;
 
 class parliamentController extends Controller
 {
-    public function search()
+    //検索フォーム表示
+    public function search_screen()
     {
         $legislators=Legislator::all()->pluck('name','id');
         $constituencies=Constituency::all()->pluck('name','id');
@@ -51,11 +52,13 @@ class parliamentController extends Controller
         $url = $this -> urlgenerater(2,1,null,$issueID);
         $data = $this -> https_api($url);
         
+        //不要なデータを削除
         $data=$data["meetingRecord"][0]["speechRecord"];
         unset($data[0]);
         $data=array_values($data);
-        
         $data = $this -> speechformat($data);
+        
+        //コメントを取得
         $comments = Comment::where('issueID',$issueID)->get();
         if ( Auth::check() ) {
             $good = Good::where('user_id',Auth::id())
@@ -64,6 +67,15 @@ class parliamentController extends Controller
         } else $good = null;
         
         return view('parliament.show', ['result' => $data,'issueID' => $issueID, 'comments' => $comments, 'good' => $good]);
+    }
+    
+    //政党から国会議員を選択
+    public function search_from_speakergroup_to_legislator($speakergroup_id)
+    {
+        $legislators = Legislator::where('speaker_group_id',$speakergroup_id)->pluck('name','id');
+        $json = json_encode($legislators);
+        
+        return response()->$json;
     }
     
     //以下共通処理

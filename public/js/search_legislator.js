@@ -81,67 +81,34 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/good.js":
-/*!******************************!*\
-  !*** ./resources/js/good.js ***!
-  \******************************/
+/***/ "./resources/js/search_legislator.js":
+/*!*******************************************!*\
+  !*** ./resources/js/search_legislator.js ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-$(function (goodbutton) {
-  $('.btn-status-change').on('click', function (e) {
-    e.preventDefault();
-    var $this = $(this);
-    var $issueID = $this.parent().find('input:hidden[name="issueID"]').val();
-    var $speechID = $this.parent().find('input:hidden[name="speechID"]').val();
-    var $status = $this.children('input:hidden[name="status"]').val();
-    var $speaker = $this.parent().find('input:hidden[name="speaker"]').val();
-    var $speech = $this.parent().find('input:hidden[name="speech"]').val();
-    $.ajaxSetup({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      }
-    });
-    $.ajax({
-      type: 'POST',
-      url: '/ajaxupdate',
-      dataType: "json",
-      data: {
-        'issueID': $issueID,
-        'speechID': $speechID,
-        'status': $status,
-        'speaker': $speaker,
-        'speech': $speech
-      }
-    }).done(function (results) {
-      $this.children().toggleClass('active');
-
-      if ($status == 1) {
-        $this.parent().children('div.btn-status-change[name$="2"]').children('i').removeClass('active');
-      } else {
-        $this.parent().children('div.btn-status-change[name$="1"]').children('i').removeClass('active');
-      }
-    }).fail(function (jqXHR) {
-      alert('失敗');
-    });
+$(function (fromspeakergroup) {
+  $('#speaker_group_id').on('select', function () {
+    alert(this.value);
   });
 });
 
 /***/ }),
 
-/***/ 1:
-/*!************************************!*\
-  !*** multi ./resources/js/good.js ***!
-  \************************************/
+/***/ 3:
+/*!*************************************************!*\
+  !*** multi ./resources/js/search_legislator.js ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/ec2-user/environment/support_politician/resources/js/good.js */"./resources/js/good.js");
+module.exports = __webpack_require__(/*! /home/ec2-user/environment/support_politician/resources/js/search_legislator.js */"./resources/js/search_legislator.js");
 
 
 /***/ })

@@ -4,6 +4,10 @@
 {{-- @yield('title')にテンプレート毎の値を代入 --}}
 @section('title', 'ユーザー登録情報')
 
+@section('javascript')
+    <script src="{{ asset('js/comment.js') }}" defer></script>
+@endsection
+
 {{-- app.blade.phpの@yield('content')に以下のレイアウトを代入 --}}
 @section('content')
     <center>
