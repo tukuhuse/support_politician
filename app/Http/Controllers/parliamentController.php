@@ -69,15 +69,6 @@ class parliamentController extends Controller
         return view('parliament.show', ['result' => $data,'issueID' => $issueID, 'comments' => $comments, 'good' => $good]);
     }
     
-    //政党から国会議員を選択
-    public function search_from_speakergroup_to_legislator($speakergroup_id)
-    {
-        $legislators = Legislator::where('speaker_group_id',$speakergroup_id)->pluck('name','id');
-        $json = json_encode($legislators);
-        
-        return response()->$json;
-    }
-    
     //以下共通処理
     //使用する定数
     const BASE_URL = 'https://kokkai.ndl.go.jp/api/';

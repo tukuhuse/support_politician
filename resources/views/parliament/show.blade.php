@@ -28,31 +28,33 @@
                         </div>
                         <div class="card-body" speechID="{{ $proposal['speechID'] }}">
                             <p class="card-text">{{ $proposal["speech"] }}</p>
-                            {{ Form::open(['method' => 'POST','action' => 'goodController@ajaxupdate']) }}
-                                {{ csrf_field() }}
-                                {{ Form::hidden('issueID',$issueID) }}
-                                {{ Form::hidden('speechID',$proposal["speechID"]) }}
-                                {{ Form::hidden('speaker',$proposal["speaker"]) }}
-                                {{ Form::hidden('speech',mb_substr($proposal["speech"],0,140)) }}
-                                @for ($status=1;$status<=2;$status++)
-                                    <div onclick="javascript:goodbutton" class="btn-status-change" name="{{ $status }}">
-                                        {{ Form::hidden('status',$status) }}
-                                        @if ($status == 1)
-                                            @if (isset($good[$proposal["speechID"]]) and $good[$proposal["speechID"]] == 1 )
-                                                <i class="far fa-thumbs-up fa-2x fa-fw active"></i>
+                            @if (Auth::check())
+                                {{ Form::open(['method' => 'POST','action' => 'goodController@ajaxupdate']) }}
+                                    {{ csrf_field() }}
+                                    {{ Form::hidden('issueID',$issueID) }}
+                                    {{ Form::hidden('speechID',$proposal["speechID"]) }}
+                                    {{ Form::hidden('speaker',$proposal["speaker"]) }}
+                                    {{ Form::hidden('speech',mb_substr($proposal["speech"],0,140)) }}
+                                    @for ($status=1;$status<=2;$status++)
+                                        <div onclick="javascript:goodbutton" class="btn-status-change" name="{{ $status }}">
+                                            {{ Form::hidden('status',$status) }}
+                                            @if ($status == 1)
+                                                @if (isset($good[$proposal["speechID"]]) and $good[$proposal["speechID"]] == 1 )
+                                                    <i class="far fa-thumbs-up fa-2x fa-fw active"></i>
+                                                @else
+                                                    <i class="far fa-thumbs-up fa-2x fa-fw"></i>
+                                                @endif
                                             @else
-                                                <i class="far fa-thumbs-up fa-2x fa-fw"></i>
+                                                @if (isset($good[$proposal["speechID"]]) and $good[$proposal["speechID"]] == 2)
+                                                    <i class="far fa-thumbs-down fa-2x fa-fw active"></i>
+                                                @else
+                                                    <i class="far fa-thumbs-down fa-2x fa-fw"></i>
+                                                @endif
                                             @endif
-                                        @else
-                                            @if (isset($good[$proposal["speechID"]]) and $good[$proposal["speechID"]] == 2)
-                                                <i class="far fa-thumbs-down fa-2x fa-fw active"></i>
-                                            @else
-                                                <i class="far fa-thumbs-down fa-2x fa-fw"></i>
-                                            @endif
-                                        @endif
-                                    </div>
-                                @endfor
-                            {{ Form::close() }}
+                                        </div>
+                                    @endfor
+                                {{ Form::close() }}
+                            @endif
                         </div>
                     </div>
                 </div>
