@@ -94,8 +94,8 @@
 /***/ (function(module, exports) {
 
 $(function (fromspeakergroup) {
-  $('#speaker_group_id').on('select', function () {
-    alert(this.value);
+  $('#speaker_group_id').on('change', function (e) {
+    alert($(this).val());
   });
 });
 

@@ -74,4 +74,12 @@ ul.nav-tabs {
     margin-left:auto;
     margin-right:auto;
     margin-bottom: 3px;
+    display:inline-flex;
+    display:flex;
+    justify-content: stretch;
+}
+
+.nav-tabs>.nav-item {
+    width: 30em;
+    text-align:center;
 }
