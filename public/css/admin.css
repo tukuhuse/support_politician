@@ -30,16 +30,6 @@ i.fa-thumbs-down.active {
     vertical-align: middle;
 }
 
-a.nonstyle {
-    text-decoration: none;
-    color: inherit;
-}
-
-a.nonstyle:hover {
-    text-decoration: none;
-    color: inherit;
-}
-
 div.btn-status-change {
     display: inline-flex;
     cursor: pointer;
@@ -82,4 +72,16 @@ ul.nav-tabs {
 .nav-tabs>.nav-item {
     width: 30em;
     text-align:center;
+}
+
+div.col {
+    border-right:1px solid #ccc;
+}
+
+div.col.end {
+    border-right:none;
+}
+
+div.search_way {
+    margin-top: 5px;
 }
