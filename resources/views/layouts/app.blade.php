@@ -6,7 +6,6 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name', 'support_politician') }}</title>
 
     <!-- Scripts -->
@@ -52,7 +51,8 @@
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('messages.Register') }}</a>
                                 </li>
                             @endif
-                        @else
+                        @endguest
+                        @auth
                             @if (Auth::user()->controll_level==1)
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('datasetting') }}">管理者ページ</a>
@@ -77,7 +77,7 @@
                                     </form>
                                 </div>
                             </li>
-                        @endguest
+                        @endauth
                     </ul>
                 </div>
             </div>

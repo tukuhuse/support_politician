@@ -81,48 +81,36 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/search_legislator.js":
-/*!*******************************************!*\
-  !*** ./resources/js/search_legislator.js ***!
-  \*******************************************/
+/***/ "./resources/js/main.js":
+/*!******************************!*\
+  !*** ./resources/js/main.js ***!
+  \******************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-$(function (search_way_flag) {
-  $('#search_way_constituency').on('click', function () {
-    document.getElementById("constituency_id").disabled = false;
-    document.getElementById("legislator_id").disabled = true;
-    document.getElementById("legislator_id").value = null;
+(function () {
+  'use strict';
+
+  $(function () {
+    $('.flash_message').fadeOut(5000);
   });
-  $('#search_way_legislator').on('click', function () {
-    document.getElementById("constituency_id").disabled = true;
-    document.getElementById("legislator_id").disabled = false;
-    document.getElementById("constituency_id").value = null;
-  });
-});
-$(function () {
-  window.onpageshow = function (event) {
-    if (event.persisted) {
-      window.location.reload();
-    }
-  };
-});
+})();
 
 /***/ }),
 
-/***/ 4:
-/*!*************************************************!*\
-  !*** multi ./resources/js/search_legislator.js ***!
-  \*************************************************/
+/***/ 1:
+/*!************************************!*\
+  !*** multi ./resources/js/main.js ***!
+  \************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/ec2-user/environment/support_politician/resources/js/search_legislator.js */"./resources/js/search_legislator.js");
+module.exports = __webpack_require__(/*! /home/ec2-user/environment/support_politician/resources/js/main.js */"./resources/js/main.js");
 
 
 /***/ })

@@ -23,7 +23,12 @@
                 <div>
                     <div class="card">
                         <div class="card-header">
-                            <h4>{{ $proposal["speakerGroup"] }}</h4>
+                            <h4>
+                                @if ($selectspeechID == $proposal['speechID'])
+                                    <i class="far fa-star"></i>
+                                @endif
+                                {{ $proposal["speakerGroup"] }}
+                            </h4>
                             <h4>{{ $proposal["speaker"] }}</h4>
                         </div>
                         <div class="card-body" speechID="{{ $proposal['speechID'] }}">

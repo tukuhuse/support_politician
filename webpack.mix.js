@@ -12,6 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+    .js('resources/js/main.js', 'public/js')
     .js('resources/js/good.js', 'public/js')
     .js('resources/js/comment.js', 'public/js')
     .js('resources/js/search_legislator.js', 'public/js')

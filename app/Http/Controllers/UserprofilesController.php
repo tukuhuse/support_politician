@@ -57,13 +57,16 @@ class UserprofilesController extends Controller
      */
     public function show($id)
     {
-        //
+        //ユーザー情報を取得
         $user=User::find($id);
         $legislator=UserLegislator::where('user_id',$user->id)->first();
         $speaker_group=UserSpeakergroup::where('user_id',$user->id)->first();
+        //ユーザーがしたコメントを取得
         $comments=Comment::where('user_id',$user->id)->get();
+        //ユーザーがgood or badした情報を取得
         $goods=Good::where('user_id',$user->id)->where('status',1)->get();
         $bads=Good::where('user_id',$user->id)->where('status',2)->get();
+        
         return view('usersprofile.show', ['user'=>$user,'legislator'=>$legislator,'speaker_group'=>$speaker_group,'goods'=>$goods,'bads'=>$bads,'comments'=>$comments]);
     }
 
@@ -77,7 +80,7 @@ class UserprofilesController extends Controller
     {
         //
         if (Auth::id()!=$id) {
-            return redirect('/');
+            return redirect('/')->with('message', '他のユーザー情報は修正できません');
         }
         
         $user=User::find($id);

@@ -38,7 +38,7 @@ class dataimportController extends Controller
                 Excel::import(new ConstituencyImport,$file);
         }
         
-        return redirect('/datasetting')->with('success', 'All good!');
+        return redirect('/datasetting')->with('message', 'データ更新に成功しました');
         
     }
 }

@@ -14,8 +14,11 @@ use App\Constituency;
 class parliamentController extends Controller
 {
     //検索フォーム表示
-    public function search_screen()
+    public function search_screen(Request $request)
     {
+        //セッションデータ削除
+        //$request->session()->flush();
+        
         $legislators=Legislator::all()->pluck('name','id');
         $constituencies=Constituency::all()->pluck('name','id');
         $speakergroups=Speaker_group::all()->pluck('name','id');
@@ -25,34 +28,62 @@ class parliamentController extends Controller
     //検索する処理
     public function index(Request $request)
     {
-        //選挙区検索又は議員検索
-        if (!empty($request->constituency_id)) $legislators = Legislator::where('constituency_id',$request->constituency_id)->pluck('name');
-        else {
-            if (!empty($request->legislator_id)) {
-                $legislator = Legislator::where('id',$request->legislator_id)->first();
-                $legislators = array($legislator->name);
-            } else $legislators = null;
+        //変数未定義のエラー対策
+        $speakerGroupName = null;
+        $legislatorsName = null;
+        
+        switch ($request->search_way) {
+            case '選挙区':
+                //エラー処理（検索条件を入力しなかった場合）
+                if ($this->searchconditionand($request->search_word,$request->constituency_id)) {
+                    return view('parliament.nosearchcondition');
+                }
+                //選挙区にキーワードを入力した場合
+                if (!is_null($request->constituency_id)) {
+                    $legislators = Legislator::where('constituency_id',$request->constituency_id)->get();
+                    $legislatorsName = $legislators->pluck('name');
+                }
+                break;
+            case '議員名':
+                if ($this->searchconditionand($request->search_word,$request->legislator_id)) {
+                    return view('parliament.nosearchcondition');
+                }
+                if (!is_null($request->legislator_id)) {
+                    $legislators = Legislator::where('id',$request->legislator_id)->get();
+                    $legislatorsName = $legislators->pluck('name');
+                }
+                break;
+            case '政党':
+                if ($this->searchconditionand($request->search_word,$request->speaker_group_id)) {
+                    return view('parliament.nosearchcondition');
+                }
+                if (!is_null($request->speaker_group_id)) {
+                    $speakerGroup = Speaker_group::find($request->speaker_group_id);
+                    $speakerGroupName = $speakerGroup->name;
+                }
+                break;
         }
         
-        //政党検索
-        if (!empty($request->speaker_group_id)) $speakergroup = Speaker_group::where('id',$request->speaker_group_id)->first()->name;
-        else $speakergroup = null;
-        
-        $url = $this->urlgenerater(1,1,$request->search_word,null,$legislators,$speakergroup);
-        $flag = is_null($request->search_word) && is_null($request->constituency_id) && is_null($request->legislator_id) && is_null($request->speaker_group_id);
+        $url = $this->urlgenerater(1,1,$request->search_word,null,$legislatorsName,$speakerGroupName);
         $data = $this->https_api($url);
-        if (!$flag && $data["numberOfRecords"] > 0) $data["speechRecord"] = $this->speechformat($data["speechRecord"]);
         
-        return view('parliament.index',['result' => $data,'searchflag' => $flag]);
+        //コメントがない場合の処理
+        if ($data["numberOfRecords"] == 0) {
+            return view('parliament.nocomment');
+        }
+        
+        $data["speechRecord"] = $this->speechformat($data["speechRecord"]);
+        
+        return view('parliament.index',['result' => $data]);
     }
     
     //討論の詳細を表示
-    public function show($issueID)
+    public function show(Request $request,$issueID)
     {
         $url = $this -> urlgenerater(2,1,null,$issueID);
         $data = $this -> https_api($url);
         
-        //不要なデータを削除
+        //不要なデータを削除(1番目は出欠確認のため)
         $data=$data["meetingRecord"][0]["speechRecord"];
         unset($data[0]);
         $data=array_values($data);
@@ -60,13 +91,15 @@ class parliamentController extends Controller
         
         //コメントを取得
         $comments = Comment::where('issueID',$issueID)->get();
+        
+        //いいねを取得
         if ( Auth::check() ) {
             $good = Good::where('user_id',Auth::id())
                 ->where('speechID','like',"%$issueID%")
                 ->pluck('status','speechID');
         } else $good = null;
         
-        return view('parliament.show', ['result' => $data,'issueID' => $issueID, 'comments' => $comments, 'good' => $good]);
+        return view('parliament.show', ['result' => $data,'issueID' => $issueID, 'comments' => $comments, 'good' => $good, 'selectspeechID' => $request->speechID]);
     }
     
     //以下共通処理
@@ -88,6 +121,10 @@ class parliamentController extends Controller
         return $data;
     }
     
+    private function searchconditionand($word,$id) {
+        return is_null($word) && is_null($id) ? true : false;
+    }
+    
     //検索用のurlを作成する関数
     private function urlgenerater($findway=1,$startrecord=1,$search_word=null,$issue=null,$legislators=null,$speakergroup=null)
     {
@@ -105,6 +142,7 @@ class parliamentController extends Controller
                 break;
         }
         
+        //議員名の姓と名の間の空白を除去
         $legislatorquery = "";
         if ($legislators!=null) {
             foreach ($legislators as $legislator) {
@@ -119,7 +157,6 @@ class parliamentController extends Controller
         $url .= '&searchRange=' . urlencode('本文');
         $url .= $this->queryword('&issueID=',$issue);
         $url .= $this->queryword('&speakerGroup=',urlencode($speakergroup));
-
         $url .= "&recordPacking=json";
         
         return $url;
@@ -133,7 +170,7 @@ class parliamentController extends Controller
         return $queryword;
     }
     
-    //
+    //発言内容正規化
     private function speechformat($data)
     {
         $records = $data;
