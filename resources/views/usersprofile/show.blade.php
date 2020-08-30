@@ -70,7 +70,7 @@
                             </div>
                             <div class="card-footer">
                                 <?php $issueID = explode('_',$good->speechID)[0]; ?>
-                                <a href="{{ url('parliament/show/'.$issueID) }}">討論詳細</a>
+                                <a href="{{ url('parliament/show/'.$issueID . '/' . $good->speechID) }}" class="btn btn-outline-success">討論詳細</a>
                             </div>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
                             </div>
                             <div class="card-footer">
                                 <?php $issueID = explode('_',$bad->speechID)[0]; ?>
-                                <a href="{{ url('parliament/show/'.$issueID) }}">討論詳細</a>
+                                <a href="{{ url('parliament/show/'.$issueID . '/' . $bad->speechID) }}" class="btn btn-outline-danger">討論詳細</a>
                             </div>
                         </div>
                     </div>

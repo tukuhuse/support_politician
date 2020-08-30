@@ -78,7 +78,7 @@ class parliamentController extends Controller
     }
     
     //討論の詳細を表示
-    public function show(Request $request,$issueID)
+    public function show(Request $request,$issueID,$speechID=null)
     {
         $url = $this -> urlgenerater(2,1,null,$issueID);
         $data = $this -> https_api($url);
@@ -99,7 +99,7 @@ class parliamentController extends Controller
                 ->pluck('status','speechID');
         } else $good = null;
         
-        return view('parliament.show', ['result' => $data,'issueID' => $issueID, 'comments' => $comments, 'good' => $good, 'selectspeechID' => $request->speechID]);
+        return view('parliament.show', ['result' => $data,'issueID' => $issueID, 'comments' => $comments, 'good' => $good, 'selectspeechID' => $speechID]);
     }
     
     //以下共通処理

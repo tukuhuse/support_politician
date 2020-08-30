@@ -14,7 +14,7 @@ Auth::routes();
 
 Route::get('/','parliamentController@search_screen')->name('search_screen');
 Route::get('parliament/index','parliamentController@index')->name('index');
-Route::get('parliament/show/{issueID}','parliamentController@show')->name('show');
+Route::get('parliament/show/{issueID}/{speechID?}','parliamentController@show')->name('show');
 
 Route::resource('users','UserprofilesController',['except' => ['create','store']])->middleware('auth');
 Route::resource('comments','CommentController', ['only' => ['store','destroy']]);
